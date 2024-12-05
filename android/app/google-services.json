@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217942102814",
+    "project_id": "mbooking-c2f31",
+    "storage_bucket": "mbooking-c2f31.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217942102814:android:6d5e2d685cc0dea8276f0f",
+        "android_client_info": {
+          "package_name": "com.hitoandzzx.movies_app_ttcn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvhZblSjJTNR0X106BZ7TijjbqJ3W47MM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
