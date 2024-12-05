@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/view/bot_nav.dart';
-import 'package:movies_app_ttcn/view/signin_signup_screen/signin_or_signup_page.dart';
+import 'package:movies_app_ttcn/helper/auth_state.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -34,7 +31,7 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: user == null ? const SignInOrSignUpPage() : const BotNav(),
+      home: const AuthStateHandler(),
     );
   }
 }
