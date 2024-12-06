@@ -18,9 +18,9 @@ Widget buildListTile({
           ),
     ),
     child: ListTile(
-      leading: Icon(icon, color: Colors.white),
-      title: Text(text, style: const TextStyle(color: Colors.white)),
-      trailing: const Icon(Icons.keyboard_arrow_right, color: Colors.white),
+      leading: Icon(icon, color: Colors.white, size: 32,),
+      title: Text(text, style: const TextStyle(color: Colors.white, fontSize: 16)),
+      trailing: const Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30,),
       onTap: onTap,
     ),
   );
