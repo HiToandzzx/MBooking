@@ -21,10 +21,12 @@ class _BotNavState extends State<BotNav> {
       child: Scaffold(
         body: IndexedStack(
           index: index,
-          children: const [
+          children:  [
             HomePage(),
             TicketPage(),
-            MoviePage(),
+             MoviePage(
+              initialTabIndex: 0,
+            ),
             ProfilePage()
           ],
         ),
