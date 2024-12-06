@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Satoshi',
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black54
+            backgroundColor: Colors.black54
         ),
 
         // DISABLE ANIMATION
