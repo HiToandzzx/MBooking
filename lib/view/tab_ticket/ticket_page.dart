@@ -12,11 +12,10 @@ class _TicketPageState extends State<TicketPage> {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('ticket page'),
-          ],
-        )
-    );
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('ticket page'),
+      ],
+    ));
   }
 }
