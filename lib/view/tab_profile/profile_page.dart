@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movies_app_ttcn/view/tab_profile/viewmodel_profile.dart';
+import 'package:movies_app_ttcn/widgets/build_list_title.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 
 class ProfilePage extends StatefulWidget {
