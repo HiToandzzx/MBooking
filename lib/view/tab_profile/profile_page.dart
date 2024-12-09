@@ -70,6 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
 
+
                   // INFO
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
