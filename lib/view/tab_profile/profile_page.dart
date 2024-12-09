@@ -44,23 +44,23 @@ class _ProfilePageState extends State<ProfilePage> {
                         borderRadius: BorderRadius.circular(45),
                         child: user?.photoURL != null
                             ? (user!.photoURL!.startsWith('http')
-                            ? Image.network(
-                          user.photoURL!,
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.cover,
-                        )
-                            : File(user.photoURL!).existsSync()
-                            ? Image.file(
-                          File(user.photoURL!),
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.cover,
-                        )
-                            : const Text(
-                          'No Image',
-                          style: TextStyle(fontSize: 16),
-                        ))
+                              ? Image.network(
+                                  user.photoURL!,
+                                  width: 90,
+                                  height: 90,
+                                  fit: BoxFit.cover,
+                                )
+                              : File(user.photoURL!).existsSync()
+                                ? Image.file(
+                                    File(user.photoURL!),
+                                    width: 90,
+                                    height: 90,
+                                    fit: BoxFit.cover,
+                                  )
+                                : const Text(
+                                    'No Image',
+                                    style: TextStyle(fontSize: 16),
+                                  ))
                             : const Text(
                           'No Image',
                           style: TextStyle(fontSize: 16),
