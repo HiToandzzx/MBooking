@@ -141,4 +141,25 @@ Widget buildMovieList(List<Results> movies) {
   );
 }
 
+Widget buildMovieLogin(Results movie) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Container(
+        width: 300,
+        height: 330,
+        decoration: BoxDecoration(
+          borderRadius:
+          BorderRadius.circular(16.0),
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+            ),
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
+    ],
+  );
+}
 
