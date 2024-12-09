@@ -47,7 +47,7 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SignInOrSignUpPage(),
+                      builder: (context) => const SignInOrSignUpPage(),
                     )
                 );
               }

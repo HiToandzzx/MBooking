@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -42,12 +44,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(45),
                         child: user?.photoURL != null
-                            ? Image.network(
-                          '${user?.photoURL}',
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.cover,
-                        )
+                            ? (user!.photoURL!.startsWith('http')
+                              ? Image.network(
+                                  user.photoURL!,
+                                  width: 90,
+                                  height: 90,
+                                  fit: BoxFit.cover,
+                                )
+                              : File(user.photoURL!).existsSync()
+                                ? Image.file(
+                                    File(user.photoURL!),
+                                    width: 90,
+                                    height: 90,
+                                    fit: BoxFit.cover,
+                                  )
+                                : const Text(
+                                    'No Image',
+                                    style: TextStyle(fontSize: 16),
+                                  ))
                             : const Text(
                           'No Image',
                           style: TextStyle(fontSize: 16),
@@ -55,7 +69,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       )
                     ],
                   ),
-                  const SizedBox(height: 24),
 
                   // INFO
                   Column(
