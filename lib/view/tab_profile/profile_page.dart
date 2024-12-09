@@ -1,12 +1,13 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movies_app_ttcn/view/tab_profile/change_pass_page.dart';
+import 'package:movies_app_ttcn/view/tab_profile/delete_account.dart';
 import 'package:movies_app_ttcn/view/tab_profile/edit_profile_page.dart';
 import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-
-import 'delete_account.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -42,12 +43,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(45),
                         child: user?.photoURL != null
-                            ? Image.network(
-                          '${user?.photoURL}',
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.cover,
-                        )
+                            ? (user!.photoURL!.startsWith('http')
+                              ? Image.network(
+                                  user.photoURL!,
+                                  width: 90,
+                                  height: 90,
+                                  fit: BoxFit.cover,
+                                )
+                              : File(user.photoURL!).existsSync()
+                                ? Image.file(
+                                    File(user.photoURL!),
+                                    width: 90,
+                                    height: 90,
+                                    fit: BoxFit.cover,
+                                  )
+                                : const Text(
+                                    'No Image',
+                                    style: TextStyle(fontSize: 16),
+                                  ))
                             : const Text(
                           'No Image',
                           style: TextStyle(fontSize: 16),
@@ -55,7 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       )
                     ],
                   ),
-                  const SizedBox(height: 24),
 
                   // INFO
                   Column(
