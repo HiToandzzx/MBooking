@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movies_app_ttcn/widgets/build_list_title.dart';
+import 'package:movies_app_ttcn/view/tab_profile/change_pass_page.dart';
+import 'package:movies_app_ttcn/view/tab_profile/edit_profile_page.dart';
+import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
+
+import 'delete_account.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,11 +16,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final user = FirebaseAuth.instance.currentUser;
-  final List<String> entries = <String>['A', 'B', 'C'];
+  void _refreshProfilePage() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 70, left: 16, right: 16),
@@ -34,16 +41,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(45),
-                        child: Image.network(
+                        child: user?.photoURL != null
+                            ? Image.network(
                           '${user?.photoURL}',
                           width: 90,
                           height: 90,
                           fit: BoxFit.cover,
+                        )
+                            : const Text(
+                          'No Image',
+                          style: TextStyle(fontSize: 16),
                         ),
                       )
                     ],
                   ),
-
                   const SizedBox(height: 24),
 
                   // INFO
@@ -56,9 +67,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             user?.displayName ?? 'No Name',
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
                         ],
@@ -70,8 +81,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           const Icon(
-                              Icons.phone_outlined,
-                              size: 20,
+                            Icons.phone_outlined,
+                            size: 20,
                           ),
                           const SizedBox(width: 10),
                           Text(
@@ -86,14 +97,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           const Icon(
-                              Icons.mail_outlined,
-                              size: 20,
+                            Icons.mail_outlined,
+                            size: 20,
                           ),
                           const SizedBox(width: 10),
                           Text(
                             user?.email ?? 'No Email',
                             style: const TextStyle(
-                              fontSize: 15
+                                fontSize: 15
                             ),
                           )
                         ],
@@ -108,7 +119,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.white,
                       size: 25,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfilePage(
+                            refreshProfile: _refreshProfilePage, // Pass callback
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -139,9 +159,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   buildListTile(
                     icon: Icons.lock_outline,
                     text: 'Change password',
+                    isLastItem: false,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ChangePasswordPage(),
+                          )
+                      );
+                    },
+                  ),
+                  buildListTile(
+                    icon: Icons.no_accounts,
+                    text: 'Delete account',
                     isLastItem: true,
                     onTap: () {
-
+                      showDeleteConfirmationDialog(context);
                     },
                   ),
 
@@ -165,3 +198,4 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+

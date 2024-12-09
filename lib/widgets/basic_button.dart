@@ -33,4 +33,37 @@ class BasicAppButton extends StatelessWidget {
   }
 }
 
+class DeleteButton extends StatelessWidget {
+
+  final VoidCallback onPressed;
+  final String title;
+  final double ? height;
+
+  const DeleteButton({
+    required this.onPressed,
+    required this.title,
+    this.height,
+    super.key
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size.fromHeight(height ?? 50),
+          backgroundColor: Colors.red,
+        ),
+        child: Text(
+            style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+            ),
+            title
+        )
+    );
+  }
+}
+
 

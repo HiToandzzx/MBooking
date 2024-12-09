@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app_ttcn/view/firebase_auth/firebase_auth.dart';
-import 'package:movies_app_ttcn/widgets/app_images.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
+import 'package:movies_app_ttcn/widgets/carousel_movies_login_page.dart';
 
 class SignInOrSignUpPage extends StatelessWidget {
   const SignInOrSignUpPage({super.key});
@@ -20,14 +20,12 @@ class SignInOrSignUpPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 60, left: 35, right: 35),
-              child: Image.asset(
-                AppImages.img_login
-              ),
+            const Padding(
+              padding: EdgeInsets.only(top: 70),
+              child: LoginMoviesCarousel(),
             ),
 
-            const SizedBox(height: 40,),
+            const SizedBox(height: 30,),
 
             const Text(
               'MBooking hello!',
@@ -48,16 +46,19 @@ class SignInOrSignUpPage extends StatelessWidget {
 
             const SizedBox(height: 70,),
 
-            BasicAppButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FirebaseAuthPage(),
-                      )
-                  );
-                },
-                title: 'Sign in or sign up'
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: BasicAppButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FirebaseAuthPage(),
+                        )
+                    );
+                  },
+                  title: 'Sign in or sign up'
+              ),
             ),
 
             const SizedBox(height: 25,),
