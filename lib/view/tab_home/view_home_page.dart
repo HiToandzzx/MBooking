@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/widgets/carousel_movie_cooming_soon.dart';
 import '../../widgets/carousel_movie_now_playing.dart';
-import '../tab_movie/movie_page.dart';
+import '../tab_movie/view_movie_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
