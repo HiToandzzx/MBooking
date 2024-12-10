@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movies_app_ttcn/view/tab_profile/change_pass_page.dart';
-import 'package:movies_app_ttcn/view/tab_profile/delete_account.dart';
-import 'package:movies_app_ttcn/view/tab_profile/edit_profile_page.dart';
+import 'package:movies_app_ttcn/view/tab_profile/view_change_pass_page.dart';
+import 'package:movies_app_ttcn/view/tab_profile/view_delete_account.dart';
+import 'package:movies_app_ttcn/view/tab_profile/view_edit_profile_page.dart';
 import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 
