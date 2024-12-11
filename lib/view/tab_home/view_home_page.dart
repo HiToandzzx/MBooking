@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     super.dispose();
+
   }
 
   void _onSearchChanged() {
