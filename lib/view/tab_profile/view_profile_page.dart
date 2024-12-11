@@ -190,9 +190,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
 
+                  /*Text(
+                    user.getIdToken()
+                  ),*/
+
                   const SizedBox(height: 40),
 
-                  BasicAppButton(
+                  MainButton(
                       onPressed: () async {
                         // Sign out from Firebase
                         await FirebaseAuth.instance.signOut();

@@ -39,7 +39,7 @@ class LoginMoviesCarousel extends StatelessWidget {
                 viewportFraction: 0.8,
                 enlargeCenterPage: true,
                 enableInfiniteScroll: true,
-                autoPlay: false,
+                autoPlay: true,
                 disableCenter: true,
                 scrollPhysics: const BouncingScrollPhysics(),
               ),

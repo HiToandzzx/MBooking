@@ -56,6 +56,7 @@ class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMix
             Tab(text: 'Coming Soon'),
           ],
         ),
+        automaticallyImplyLeading: false,
       ),
 
       body: TabBarView(

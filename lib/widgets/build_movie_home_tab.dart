@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../helper/format_date.dart';
 import '../model/movie_model.dart';
-import '../view/details_movie/details_movie.dart';
+import '../view/details_movie/view_details_movie.dart';
 
+// NOW PLAYING
 Widget buildMovieCard(Results movie) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,6 +27,7 @@ Widget buildMovieCard(Results movie) {
 
       Text(
         movie.title!,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -64,6 +66,7 @@ Widget buildMovieCard(Results movie) {
   );
 }
 
+// COMING SOON
 Widget buildMovieList(List<Results> movies) {
   return ListView.builder(
     scrollDirection: Axis.horizontal,
@@ -80,7 +83,7 @@ Widget buildMovieList(List<Results> movies) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailMoviePage(movieId: movie.id!),
+                    builder: (context) => DetailMoviePage(movie: movie),
                   ),
                 );
               },
@@ -141,6 +144,7 @@ Widget buildMovieList(List<Results> movies) {
   );
 }
 
+// LOGIN PAGE
 Widget buildMovieLogin(Results movie) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,6 +164,194 @@ Widget buildMovieLogin(Results movie) {
         ),
       ),
     ],
+  );
+}
+
+// SEARCH IN HOME PAGE
+Widget buildMovieSearch(List<Results> movies) {
+  int currentYear = DateTime.now().year;
+
+  List<Results> filteredMovies = movies.where((movie) {
+    try {
+      DateTime releaseDate = DateTime.parse(movie.releaseDate!);
+      return releaseDate.year == currentYear;
+    } catch (e) {
+      return false;
+    }
+  }).toList();
+
+  return GridView.builder(
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      mainAxisSpacing: 16.0,
+      crossAxisSpacing: 16.0,
+      childAspectRatio: 0.6,
+    ),
+    itemCount: filteredMovies.length,
+    itemBuilder: (context, index) {
+      Results movie = filteredMovies[index];
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailMoviePage(movie: movie),
+                ),
+              );
+            },
+            child: Container(
+              width: 173,
+              height: 230,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                      'https://image.tmdb.org/t/p/w200${movie.posterPath}'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Column(
+            children: [
+              Text(
+                movie.title!,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    color: Colors.amber,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                formatDate(movie.releaseDate),
+                style: const TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.star, color: Colors.yellow, size: 14),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${movie.voteAverage}',
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    '(${movie.voteCount})',
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// LIST DIRECTOR
+Widget buildDirectorList(List<Results> movies) {
+  return ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: movies.length,
+    itemBuilder: (context, index) {
+      Results movie = movies[index];
+      return Padding(
+        padding: const EdgeInsets.only(right: 16),
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF1C1C1C),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://image.tmdb.org/t/p/w200${movie.posterPath}'
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                Text(
+                  movie.title!,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+// LIST ACTOR
+Widget buildActorList(List<Results> movies) {
+  return ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: movies.length,
+    itemBuilder: (context, index) {
+      Results movie = movies[index];
+      return Padding(
+        padding: const EdgeInsets.only(right: 16),
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF1C1C1C),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://image.tmdb.org/t/p/w200${movie.posterPath}'
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                Text(
+                  movie.title!,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
   );
 }
 

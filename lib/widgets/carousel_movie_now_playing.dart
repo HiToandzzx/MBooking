@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../model/movie_model.dart';
-import '../view/details_movie/details_movie.dart';
+import '../view/details_movie/view_details_movie.dart';
 import '../view/tab_home/viewmodel_home.dart';
 import 'build_movie_home_tab.dart';
 
@@ -28,7 +28,7 @@ class NowPlayingMoviesCarousel extends StatelessWidget {
           );
         } else if (snapshot.hasData) {
           return SizedBox(
-            height: 630,
+            height: 600,
             child: CarouselSlider.builder(
               itemCount: snapshot.data!.results!.length,
               itemBuilder: (context, index, realIndex) {
@@ -39,7 +39,7 @@ class NowPlayingMoviesCarousel extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            DetailMoviePage(movieId: movie.id!),
+                            DetailMoviePage(movie: movie,),
                       ),
                     );
                   },
