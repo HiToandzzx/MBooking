@@ -10,10 +10,10 @@ class TicketPage extends StatefulWidget {
 class _TicketPageState extends State<TicketPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
         Text('ticket page'),
       ],
     ));

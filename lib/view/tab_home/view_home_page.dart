@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/widgets/carousel_movie_cooming_soon.dart';
 import '../../widgets/carousel_movie_now_playing.dart';
+import '../../widgets/carousel_search_movie.dart';
 import '../tab_movie/view_movie_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -11,9 +12,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      _searchQuery = _searchController.text.trim();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    //final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       body: Padding(
@@ -34,7 +57,8 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Text(
-                            "Hi, ${user?.displayName ?? 'No Name'}",
+                            //"Hi, ${user?.displayName ?? 'No Name'}",
+                            "Hi, Hello",
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -90,136 +114,135 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 24),
 
-            // MAIN CONTENT
-            Expanded(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      // TEXT FIELD SEARCH
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E1E1E),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const TextField(
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.white,
-                              size: 35,
-                            ),
-                            hintText: "Search",
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(vertical: 16),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Now Playing',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MoviePage(
-                                        initialTabIndex: 0,
-                                      ),
-                                ),
-                              );
-                            },
-                            child: const Row(
-                              children: [
-                                Text(
-                                  'See all',
-                                  style: TextStyle(
-                                    color: Color(0xFFFCC434),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.keyboard_arrow_right,
-                                  color: Colors.amber,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      // NOW PLAYING
-                      const NowPlayingMoviesCarousel(),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Coming soon',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MoviePage(
-                                        initialTabIndex: 1,
-                                      ),
-                                ),
-                              );
-                            },
-                            child: const Row(
-                              children: [
-                                Text(
-                                  'See all',
-                                  style: TextStyle(
-                                    color: Color(0xFFFCC434),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(
-                                    Icons.keyboard_arrow_right,
-                                  color: Colors.amber,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // COMING SOON
-                      const ComingSoonMovieCarousel()
-                    ],
+            // SEARCH TEXT FIELD
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E1E1E),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: TextField(
+                controller: _searchController,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 35,
                   ),
+                  hintText: "Search",
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(vertical: 16),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+
+            const SizedBox(height: 30),
+
+            // MAIN CONTENT
+            Expanded(
+              child: _searchQuery.isNotEmpty
+                  ? SearchMovieCarousel(query: _searchQuery)
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Now Playing',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MoviePage(
+                                        initialTabIndex: 0,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      'See all',
+                                      style: TextStyle(
+                                        color: Color(0xFFFCC434),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.keyboard_arrow_right,
+                                      color: Colors.amber,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // NOW PLAYING
+                          const NowPlayingMoviesCarousel(),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Coming soon',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MoviePage(
+                                        initialTabIndex: 1,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      'See all',
+                                      style: TextStyle(
+                                        color: Color(0xFFFCC434),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.keyboard_arrow_right,
+                                      color: Colors.amber,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // COMING SOON
+                          const ComingSoonMovieCarousel(),
+                        ],
+                      ),
+              ),
+            ),
           ],
         ),
       ),

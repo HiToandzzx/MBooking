@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class BasicAppButton extends StatelessWidget {
+class MainButton extends StatelessWidget {
 
   final VoidCallback onPressed;
   final String title;
   final double ? height;
 
-  const BasicAppButton({
+  const MainButton({
     required this.onPressed,
     required this.title,
     this.height,
@@ -26,6 +26,43 @@ class BasicAppButton extends StatelessWidget {
                 color: Colors.black,
                 fontSize: 18,
               fontWeight: FontWeight.bold
+            ),
+            title
+        )
+    );
+  }
+}
+
+class BasicButton extends StatelessWidget {
+
+  final VoidCallback onPressed;
+  final String title;
+  final double ? height;
+
+  const BasicButton({
+    required this.onPressed,
+    required this.title,
+    this.height,
+    super.key
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size.fromHeight(height ?? 50),
+          backgroundColor: Colors.black,
+            side: const BorderSide(
+                width: 1,
+                color: Colors.white
+            )
+        ),
+        child: Text(
+            style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold
             ),
             title
         )

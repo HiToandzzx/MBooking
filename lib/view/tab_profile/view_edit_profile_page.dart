@@ -98,7 +98,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
             const SizedBox(height: 20),
 
-            BasicAppButton(
+            MainButton(
               onPressed: () async {
                 try {
                   if (user != null) {

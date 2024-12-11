@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/view/signin_signup_screen/signin_or_signup_page.dart';
+import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
 
 Future<void> showDeleteConfirmationDialog(BuildContext context) async {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -22,7 +22,7 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
           style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 14
+              fontSize: 16
           ),
         ),
         actions: <Widget>[
@@ -35,7 +35,7 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
               style: TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16
+                  fontSize: 18
               ),
             ),
           ),
@@ -47,7 +47,7 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignInOrSignUpPage(),
+                      builder: (context) => const WelcomePage(),
                     )
                 );
               }
@@ -57,7 +57,7 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
               style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16
+                  fontSize: 18
               ),
             ),
           ),
