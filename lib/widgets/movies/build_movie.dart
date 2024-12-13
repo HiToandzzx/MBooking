@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../helper/format_date.dart';
-import '../model/movie_model.dart';
-import '../view/details_movie/view_details_movie.dart';
+import '../../helper/format_date.dart';
+import '../../model/movie_model.dart';
+import '../../view/details_movie/view_details_movie.dart';
 
 // NOW PLAYING
 Widget buildMovieCard(Results movie) {
@@ -108,6 +108,7 @@ Widget buildMovieList(List<Results> movies) {
               children: [
                 Text(
                   movie.title!,
+                  overflow: TextOverflow.clip,
                   style: const TextStyle(
                       color: Colors.amber,
                       fontSize: 14,
@@ -254,104 +255,6 @@ Widget buildMovieSearch(List<Results> movies) {
   );
 }
 
-// LIST DIRECTOR
-Widget buildDirectorList(List<Results> movies) {
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: movies.length,
-    itemBuilder: (context, index) {
-      Results movie = movies[index];
-      return Padding(
-        padding: const EdgeInsets.only(right: 16),
-        child: Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF1C1C1C),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://image.tmdb.org/t/p/w200${movie.posterPath}'
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
 
-                const SizedBox(width: 10),
 
-                Text(
-                  movie.title!,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
-// LIST ACTOR
-Widget buildActorList(List<Results> movies) {
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: movies.length,
-    itemBuilder: (context, index) {
-      Results movie = movies[index];
-      return Padding(
-        padding: const EdgeInsets.only(right: 16),
-        child: Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF1C1C1C),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://image.tmdb.org/t/p/w200${movie.posterPath}'
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-
-                const SizedBox(width: 10),
-
-                Text(
-                  movie.title!,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
 

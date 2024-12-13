@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/movie_model.dart';
-import '../view/tab_home/viewmodel_home.dart';
-import 'build_movie_home_tab.dart';
+import 'package:movies_app_ttcn/widgets/select_seat/widget_list_date_time.dart';
+import '../../model/movie_model.dart';
+import '../../view/tab_home/viewmodel_home.dart';
 
-class ComingSoonMovieCarousel extends StatelessWidget {
-  const ComingSoonMovieCarousel({Key? key}) : super(key: key);
+class ListTime extends StatelessWidget {
+  const ListTime({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +26,9 @@ class ComingSoonMovieCarousel extends StatelessWidget {
           );
         } else if (snapshot.hasData) {
           return SizedBox(
-            height: 350,
-            child: buildMovieList(
+            height: 50,
+            child: buildTimeList(
                 snapshot.data!.results!
-                    .take(10)
-                    .toList()
             ),
           );
         } else {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/movie_model.dart';
-import '../view/tab_home/viewmodel_home.dart';
-import 'build_movie_home_tab.dart';
+import '../../model/movie_model.dart';
+import '../../view/tab_home/viewmodel_home.dart';
+import '../cinema/widget_list.dart';
 
-class ListActor extends StatelessWidget {
-  const ListActor({Key? key}) : super(key: key);
+class ListDirector extends StatelessWidget {
+  const ListDirector({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ListActor extends StatelessWidget {
         } else if (snapshot.hasData) {
           return SizedBox(
             height: 80,
-            child: buildActorList(
+            child: buildDirectorList(
                 snapshot.data!.results!
             ),
           );

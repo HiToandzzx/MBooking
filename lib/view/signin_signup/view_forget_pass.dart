@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_app_ttcn/view/signin_signup/view_forget_pass.dart';
-import 'package:movies_app_ttcn/view/signin_signup/view_signup.dart';
+import 'package:movies_app_ttcn/view/signin_signup/view_signin.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/widgets/basic_text_field.dart';
-import 'package:movies_app_ttcn/widgets/checkbox.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class ForgetPassPage extends StatefulWidget {
+  const ForgetPassPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<ForgetPassPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<ForgetPassPage> {
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Sign In',
+                'Reset Password',
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold
@@ -46,61 +43,18 @@ class _SignInPageState extends State<SignInPage> {
                   labelText: 'Email'
               ),
               const SizedBox(height: 20,),
-              CustomTextField(
-                  controller: _passwordController,
-                  labelText: 'Password'
-              ),
-              const SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Row(
-                    children: [
-                      CustomCheckbox(),
-                      Text(
-                        'Remember me',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    ],
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) => const ForgetPassPage(),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        'Forget password',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                      )
-                  )
-                ],
-              ),
-              const SizedBox(height: 20,),
               MainButton(
                   onPressed: () {
 
                   },
-                  title: 'Sign in'
+                  title: 'Reset'
               ),
               const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Not a member?',
+                    'Back to',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold
@@ -111,14 +65,14 @@ class _SignInPageState extends State<SignInPage> {
                         Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) => const SignUpPage(),
+                            pageBuilder: (context, animation1, animation2) => const SignInPage(),
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
                           ),
                         );
                       },
                       child: const Text(
-                        'Sign up now',
+                        'Sign in',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

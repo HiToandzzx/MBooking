@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
+import 'package:movies_app_ttcn/view/bot_nav.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: const WelcomePage(),
+      home: const BotNav(),
     );
   }
 }

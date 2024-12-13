@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_app_ttcn/view/bot_nav.dart';
 import 'package:movies_app_ttcn/view/signin_signup/view_signup.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-import 'package:movies_app_ttcn/widgets/carousel_movies_login_page.dart';
+import 'package:movies_app_ttcn/widgets/movies/carousel_movies_login_page.dart';
+
+import '../signin_signup/view_signin.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -49,11 +50,19 @@ class WelcomePage extends StatelessWidget {
 
             MainButton(
                 onPressed: () {
-                  Navigator.push(
+                  /*Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const BotNav(),  //SignInPage()
+                        builder: (context) => const SignInPage(),
                       )
+                  );*/
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => const SignInPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 },
                 title: 'Sign in'
@@ -63,11 +72,19 @@ class WelcomePage extends StatelessWidget {
 
             BasicButton(
                 onPressed: () {
-                  Navigator.push(
+                  /*Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const SignUpPage(),
                       )
+                  );*/
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => const SignUpPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 },
                 title: 'Sign up'

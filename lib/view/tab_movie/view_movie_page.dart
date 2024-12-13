@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../model/movie_model.dart';
-import '../../widgets/build_movies_tab.dart';
+import '../../widgets/movies/build_movies_tab.dart';
 import '../tab_home/viewmodel_home.dart';
 
 class MoviePage extends StatefulWidget {
@@ -56,7 +56,7 @@ class _MoviePageState extends State<MoviePage> with SingleTickerProviderStateMix
             Tab(text: 'Coming Soon'),
           ],
         ),
-        automaticallyImplyLeading: false,
+
       ),
 
       body: TabBarView(

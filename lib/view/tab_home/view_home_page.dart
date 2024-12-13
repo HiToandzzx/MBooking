@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/widgets/carousel_movie_cooming_soon.dart';
-import '../../widgets/carousel_movie_now_playing.dart';
-import '../../widgets/carousel_search_movie.dart';
+import 'package:movies_app_ttcn/widgets/movies/carousel_movie_cooming_soon.dart';
+import '../../widgets/movies/carousel_movie_now_playing.dart';
+import '../../widgets/movies/carousel_search_movie.dart';
 import '../tab_movie/view_movie_page.dart';
 
 class HomePage extends StatefulWidget {

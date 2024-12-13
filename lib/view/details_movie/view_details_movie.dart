@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/helper/overview_text.dart';
+import 'package:movies_app_ttcn/view/select_seat/view_select_seat.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-import 'package:movies_app_ttcn/widgets/build_list_actor.dart';
-import 'package:movies_app_ttcn/widgets/build_list_director.dart';
+import 'package:movies_app_ttcn/widgets/detail_movie/build_list_actor.dart';
+import 'package:movies_app_ttcn/widgets/detail_movie/build_list_director.dart';
 import '../../helper/format_date.dart';
 import '../../model/movie_model.dart';
-import '../../widgets/build_cinema.dart';
+import '../../widgets/detail_movie/build_cinema.dart';
 
 class DetailMoviePage extends StatefulWidget {
   final Results movie;
@@ -26,7 +27,7 @@ class DetailMoviePageState extends State<DetailMoviePage> {
   }
 
   Future<void> _fetchMovieDetails() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   @override
@@ -341,7 +342,14 @@ class DetailMoviePageState extends State<DetailMoviePage> {
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: MainButton(
-                  onPressed: () {  },
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SelectSeatPage(),
+                        )
+                    );
+                  },
                   title: 'Continue',
                 ),
               ),

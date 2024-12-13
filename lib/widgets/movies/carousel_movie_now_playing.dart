@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../model/movie_model.dart';
-import '../view/details_movie/view_details_movie.dart';
-import '../view/tab_home/viewmodel_home.dart';
-import 'build_movie_home_tab.dart';
+import '../../model/movie_model.dart';
+import '../../view/details_movie/view_details_movie.dart';
+import '../../view/tab_home/viewmodel_home.dart';
+import 'build_movie.dart';
 
 class NowPlayingMoviesCarousel extends StatelessWidget {
   const NowPlayingMoviesCarousel({Key? key}) : super(key: key);

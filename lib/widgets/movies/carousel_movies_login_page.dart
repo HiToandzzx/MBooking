@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../model/movie_model.dart';
-import '../view/tab_home/viewmodel_home.dart';
-import 'build_movie_home_tab.dart';
+import '../../model/movie_model.dart';
+import '../../view/tab_home/viewmodel_home.dart';
+import 'build_movie.dart';
 
 class LoginMoviesCarousel extends StatelessWidget {
   const LoginMoviesCarousel({Key? key}) : super(key: key);
