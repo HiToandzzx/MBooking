@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/widgets/build_movie_home_tab.dart';
+import 'package:movies_app_ttcn/widgets/movies/build_movie.dart';
 
-import '../model/movie_model.dart';
-import '../view/tab_home/viewmodel_home.dart';
+import '../../model/movie_model.dart';
+import '../../view/tab_home/viewmodel_home.dart';
 
 class SearchMovieCarousel extends StatelessWidget {
   final String query;

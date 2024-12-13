@@ -15,10 +15,10 @@ class CinemaItem extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CinemaItemState createState() => _CinemaItemState();
+  CinemaItemState createState() => CinemaItemState();
 }
 
-class _CinemaItemState extends State<CinemaItem> {
+class CinemaItemState extends State<CinemaItem> {
   bool _isSelected = false;
 
   @override
