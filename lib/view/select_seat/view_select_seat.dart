@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/helper/nav_mess_profile.dart';
+import 'package:movies_app_ttcn/view/payment/view_payment_page.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 
 import '../../widgets/app_images.dart';
@@ -192,6 +193,12 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Selected Seats: ${selectedSeats.join(', ')}')),
+              );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PaymentPage(),
+                  )
               );
             }
           },

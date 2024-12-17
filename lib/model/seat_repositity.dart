@@ -14,9 +14,9 @@ Future<List<Seat>> fetchSeats() async {
 
 
 Future<List<Date>> fetchDates() async {
-  // Gọi API hoặc truy vấn cơ sở dữ liệu để lấy dữ liệu ngày
-  // Ví dụ giả định:
-  return List.generate(7, (index) => Date(date: 'Dec ${10 + index}'));
+ // Gọi API hoặc truy vấn cơ sở dữ liệu để lấy dữ liệu ngày
+// Ví dụ giả định:
+return List.generate(7, (index) => Date(date: 'Dec ${10 + index}'));
 }
 
 Future<List<Time>> fetchTimes() async {
