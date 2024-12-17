@@ -83,7 +83,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
             const SizedBox(height: 20),
 
-            BasicAppButton(
+            MainButton(
               onPressed: () async {
                 try {
                   if (user != null) {
