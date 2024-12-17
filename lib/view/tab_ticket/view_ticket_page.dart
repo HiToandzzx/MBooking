@@ -30,7 +30,7 @@ class _TicketPageState extends State<TicketPage> {
       ),
       body: Center(
         child: Container(
-          margin: EdgeInsets.all(16),
+          margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -44,7 +44,7 @@ class _TicketPageState extends State<TicketPage> {
             ],
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
               // Movie Details
               Row(
@@ -54,8 +54,8 @@ class _TicketPageState extends State<TicketPage> {
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       'https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg', // Placeholder Image
-                      width: 80,
-                      height: 120,
+                      width: 90,
+                      height: 140,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -67,7 +67,7 @@ class _TicketPageState extends State<TicketPage> {
                         Text(
                           'Avengers: Infinity War',
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.black87),
                         ),
@@ -75,13 +75,13 @@ class _TicketPageState extends State<TicketPage> {
                         Text(
                           '2 hours 29 minutes',
                           style: TextStyle(
-                              color: Colors.black54, fontSize: 14),
+                              color: Colors.black54, fontSize: 16),
                         ),
                         SizedBox(height: 4),
                         Text(
                           '🎭 Action, adventure, sci-fi',
                           style: TextStyle(
-                              color: Colors.black54, fontSize: 14),
+                              color: Colors.black54, fontSize: 16),
                         ),
                       ],
                     ),
@@ -111,36 +111,36 @@ class _TicketPageState extends State<TicketPage> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.access_time, color: Colors.black54),
-                      SizedBox(width: 8),
+                      Icon(Icons.access_time, color: Colors.black54,size: 40,),
+                      SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('14h15\'',
                               style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold)),
                           Text('10.12.2022',
-                              style: TextStyle(color: Colors.black54)),
+                              style: TextStyle(color: Colors.black54, fontSize: 16)),
                         ],
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      Icon(Icons.event_seat, color: Colors.black54),
-                      SizedBox(width: 8),
+                      Icon(Icons.event_seat, color: Colors.black54, size: 40),
+                      SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Section 4',
                               style: TextStyle(
                                   color: Colors.black87,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold)),
                           Text('Seat H7, H8',
-                              style: TextStyle(color: Colors.black54)),
+                              style: TextStyle(color: Colors.black54, fontSize: 16)),
                         ],
                       ),
                     ],
@@ -148,12 +148,27 @@ class _TicketPageState extends State<TicketPage> {
                 ],
               ),
               Divider(),
-
+              SizedBox(height: 20),
+              Container(
+                width: double.infinity,
+                height: 1,
+                margin: EdgeInsets.symmetric(horizontal: 0),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.grey.shade400,
+                      width: 1,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               // Price
               Row(
                 children: [
-                  Icon(Icons.monetization_on, color: Colors.black54),
-                  SizedBox(width: 8),
+                  Icon(Icons.monetization_on, color: Colors.black54,size: 30,),
+                  SizedBox(width: 10),
                   Text(
                     '210.000 VND',
                     style: TextStyle(
@@ -163,40 +178,40 @@ class _TicketPageState extends State<TicketPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 16),
 
               // Cinema Address
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.location_on, color: Colors.black54),
+                  Icon(Icons.location_on, color: Colors.black54,size: 30,),
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       'Vincom Ocean Park CGV\n4th floor, Vincom Ocean Park, Da Ton, Gia Lam, Ha Noi',
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12),
-
-              // QR Code Section
-              Row(
-                children: [
-                  Icon(Icons.qr_code, color: Colors.black54),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Show this QR code to the ticket counter to receive your ticket',
-                      style: TextStyle(color: Colors.black54),
+                      style: TextStyle(color: Colors.black54, fontSize: 16),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 16),
-              TicketSeparator(),
+
+              // QR Code Section
+              Row(
+                children: [
+                  Icon(Icons.qr_code, color: Colors.black54,size: 30,),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Show this QR code to the ticket counter to receive your ticket',
+                      style: TextStyle(color: Colors.black54,fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 20),
+              TicketSeparator(),
+              SizedBox(height: 40),
               // QR Code Placeholder
               Container(
                 height: 80,
@@ -212,12 +227,12 @@ class _TicketPageState extends State<TicketPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 16),
 
               // Order ID
               Text(
                 'Order ID: 78889377726',
-                style: TextStyle(color: Colors.black54),
+                style: TextStyle(color: Colors.black54,fontSize: 16),
               ),
             ],
           ),
