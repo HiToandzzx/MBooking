@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/view/tab_home/view_home_page.dart';
 import 'package:movies_app_ttcn/view/tab_movie/view_movie_page.dart';
 import 'package:movies_app_ttcn/view/tab_profile/view_profile_page.dart';
+import 'package:movies_app_ttcn/view/tab_ticket/select_ticket_page.dart';
 import 'package:movies_app_ttcn/view/tab_ticket/view_ticket_page.dart';
 
 class BotNav extends StatefulWidget {
@@ -23,7 +24,7 @@ class _BotNavState extends State<BotNav> {
           index: index,
           children:  [
             HomePage(),
-            TicketPage(),
+            SelectSeatPage(),
              MoviePage(
               initialTabIndex: 0,
             ),
