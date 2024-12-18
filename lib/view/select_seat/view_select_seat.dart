@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/helper/nav_mess_profile.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 
 import '../../widgets/app_images.dart';
@@ -185,17 +184,17 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
         child: MainButton(
           onPressed: () {
             if (selectedSeats.isEmpty) {
-              showFalseSnackBar(
+              /*showFalseSnackBar(
                   context,
                   'No seat selected'
-              );
+              );*/
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Selected Seats: ${selectedSeats.join(', ')}')),
               );
             }
           },
-          title: 'Buy ticket',
+          title: const Text('Buy ticket'),
         ),
       ),
     );

@@ -1,19 +1,24 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/view/bot_nav.dart';
+import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
+import 'view/auth/signin/model_signin.dart';
+import 'view/auth/signin/viewmodel_signin.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+
+  User? currentUser = await SignInViewModel().getCurrentUser();
+
+  runApp(MyApp(initialUser: currentUser));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final User? initialUser;
+
+  const MyApp({Key? key, this.initialUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -31,7 +36,7 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: const BotNav(),
+      home: initialUser != null ? const BotNav() : const WelcomePage(),
     );
   }
 }

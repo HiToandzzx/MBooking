@@ -1,217 +1,184 @@
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movies_app_ttcn/view/tab_profile/view_change_pass_page.dart';
-import 'package:movies_app_ttcn/view/tab_profile/view_delete_account.dart';
-import 'package:movies_app_ttcn/view/tab_profile/view_edit_profile_page.dart';
+import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
 import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
+import '../auth/signin/viewmodel_signin.dart';
+import '../auth/signin/model_signin.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  void _refreshProfilePage() {
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    final SignInViewModel signInViewModel = SignInViewModel();
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 70, left: 16, right: 16),
-        child: Column(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.black,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: FutureBuilder<User?>(
+          future: signInViewModel.getCurrentUser(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.amber,)
+              );
+            }
+            if (snapshot.hasData && snapshot.data != null) {
+              final user = snapshot.data!;
+
+              return Column(
                 children: [
-                  // IMAGE
-                  Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(45),
-                        child: user?.photoURL != null
-                            ? (user!.photoURL!.startsWith('http')
-                              ? Image.network(
-                                  user.photoURL!,
-                                  width: 90,
-                                  height: 90,
-                                  fit: BoxFit.cover,
-                                )
-                              : File(user.photoURL!).existsSync()
-                                ? Image.file(
-                                    File(user.photoURL!),
-                                    width: 90,
-                                    height: 90,
-                                    fit: BoxFit.cover,
-                                  )
-                                : const Text(
-                                    'No Image',
-                                    style: TextStyle(fontSize: 16),
-                                  ))
-                            : const Text(
-                          'No Image',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )
-                    ],
-                  ),
-
-                  // INFO
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // NAME
-                      Row(
-                        children: [
-                          Text(
-                            user?.displayName ?? 'No Name',
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // SĐT
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.phone_outlined,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                              user?.phoneNumber ?? 'Not add phone yet'
-                          )
-                        ],
-                      ),
-
-                      const SizedBox(height: 4),
-
-                      // EMAIL
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.mail_outlined,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            user?.email ?? 'No Email',
-                            style: const TextStyle(
-                                fontSize: 15
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  // BUTTON EDIT PROFILE
-                  IconButton(
-                    icon: const Icon(
-                      Icons.edit_note,
-                      color: Colors.white,
-                      size: 25,
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfilePage(
-                            refreshProfile: _refreshProfilePage, // Pass callback
-                          ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // USER IMAGE
+                        Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(45),
+                              child: Image.network(
+                                user.picture,
+                                width: 90,
+                                height: 90,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          ],
                         ),
-                      );
-                    },
+
+                        // USER INFO
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // USER NAME
+                            Row(
+                              children: [
+                                Text(
+                                  user.username,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+
+                            // PHONE
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.phone_outlined,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(user.phone),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+
+                            // EMAIL
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.mail_outlined,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  user.email,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        // EDIT PROFILE BUTTON
+                        IconButton(
+                          icon: const Icon(
+                            Icons.edit_note,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            // Handle edit profile
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // MAIN CONTENT
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        buildListTile(
+                          icon: Icons.confirmation_number_outlined,
+                          text: 'My ticket',
+                          isLastItem: false,
+                          onTap: () {
+                            // Handle onTap
+                          },
+                        ),
+                        buildListTile(
+                          icon: Icons.shopping_cart_outlined,
+                          text: 'Payment history',
+                          isLastItem: false,
+                          onTap: () {
+                            // Handle onTap
+                          },
+                        ),
+                        buildListTile(
+                          icon: Icons.lock_outline,
+                          text: 'Change password',
+                          isLastItem: false,
+                          onTap: () {
+                            // Handle onTap
+                          },
+                        ),
+                        buildListTile(
+                          icon: Icons.no_accounts,
+                          text: 'Delete account',
+                          isLastItem: true,
+                          onTap: () {
+                            // Handle onTap
+                          },
+                        ),
+
+                        const SizedBox(height: 40),
+
+                        MainButton(
+                            onPressed: () async {
+                              await signInViewModel.logout();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const WelcomePage(),
+                                  )
+                              );
+                            },
+                            title: const Text('Logout')
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            // MAIN CONTENT
-            Expanded(
-              child: ListView(
-                children: [
-                  buildListTile(
-                    icon: Icons.confirmation_number_outlined,
-                    text: 'My ticket',
-                    isLastItem: false,
-                    onTap: () {
-
-                    },
-                  ),
-                  buildListTile(
-                    icon: Icons.shopping_cart_outlined,
-                    text: 'Payment history',
-                    isLastItem: false,
-                    onTap: () {
-
-                    },
-                  ),
-                  buildListTile(
-                    icon: Icons.lock_outline,
-                    text: 'Change password',
-                    isLastItem: false,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChangePasswordPage(),
-                          )
-                      );
-                    },
-                  ),
-                  buildListTile(
-                    icon: Icons.no_accounts,
-                    text: 'Delete account',
-                    isLastItem: true,
-                    onTap: () {
-                      showDeleteConfirmationDialog(context);
-                    },
-                  ),
-
-                  /*Text(
-                    user.getIdToken()
-                  ),*/
-
-                  const SizedBox(height: 40),
-
-                  MainButton(
-                      onPressed: () async {
-                        // Sign out from Firebase
-                        await FirebaseAuth.instance.signOut();
-                        // Sign out from Google
-                        await GoogleSignIn().signOut();
-                      },
-                      title: 'Log out'
-                  )
-                ],
-              ),
-            ),
-          ],
+              );
+            } else {
+              return const Center(child: Text('User not found.'));
+            }
+          },
         ),
       ),
     );
   }
 }
-

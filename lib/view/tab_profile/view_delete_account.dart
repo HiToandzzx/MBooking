@@ -1,3 +1,4 @@
+/*
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
@@ -65,4 +66,4 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
       );
     },
   );
-}
+}*/
