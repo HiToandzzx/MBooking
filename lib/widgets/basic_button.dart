@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MainButton extends StatelessWidget {
-
   final VoidCallback onPressed;
-  final String title;
+  final Widget title;
   final double ? height;
 
   const MainButton({
@@ -21,14 +20,14 @@ class MainButton extends StatelessWidget {
           minimumSize: Size.fromHeight(height ?? 50),
           backgroundColor: Colors.amber[400],
         ),
-        child: Text(
-            style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-              fontWeight: FontWeight.bold
-            ),
-            title
-        )
+      child: DefaultTextStyle(
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        child: title,
+      ),
     );
   }
 }

@@ -350,7 +350,7 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                         )
                     );
                   },
-                  title: 'Continue',
+                  title: const Text('Continue'),
                 ),
               ),
             );

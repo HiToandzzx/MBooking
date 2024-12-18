@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_app_ttcn/view/signin_signup/view_signin.dart';
+import 'package:movies_app_ttcn/view/auth/signin/view_signin.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/widgets/basic_text_field.dart';
@@ -47,7 +47,7 @@ class _SignInPageState extends State<ForgetPassPage> {
                   onPressed: () {
 
                   },
-                  title: 'Reset'
+                  title: const Text('Reset')
               ),
               const SizedBox(height: 20,),
               Row(

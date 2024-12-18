@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_ttcn/view/auth/signin/model_signin.dart';
 import 'package:movies_app_ttcn/widgets/movies/carousel_movie_cooming_soon.dart';
 import '../../widgets/movies/carousel_movie_now_playing.dart';
 import '../../widgets/movies/carousel_search_movie.dart';
+import '../auth/signin/viewmodel_signin.dart';
 import '../tab_movie/view_movie_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,81 +39,96 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //final user = FirebaseAuth.instance.currentUser;
-
+    final SignInViewModel signInViewModel = SignInViewModel();
+    
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
         child: Column(
           children: [
             // CUSTOM APPBAR
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.black,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+            FutureBuilder<User?>(
+                future: signInViewModel.getCurrentUser(), 
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return const Center(
+                        child: CircularProgressIndicator(color: Colors.amber,)
+                    );
+                  }
+                  if(snapshot.hasData && snapshot.data != null){
+                    final user = snapshot.data!;
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            //"Hi, ${user?.displayName ?? 'No Name'}",
-                            "Hi, Hello",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Hi, ${user.username}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  const Icon(
+                                    Icons.waving_hand,
+                                    color: Colors.yellow,
+                                    size: 18,
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              const Text(
+                                "Welcome back",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          const Icon(
-                            Icons.waving_hand,
-                            color: Colors.yellow,
-                            size: 18,
-                          )
+                          Stack(
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.notifications,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                                onPressed: () {},
+                              ),
+                              Positioned(
+                                right: 11,
+                                top: 12,
+                                child: Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(width: 2),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        "Welcome back",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.notifications,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                        onPressed: () {},
-                      ),
-                      Positioned(
-                        right: 11,
-                        top: 12,
-                        child: Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                            border: Border.all(width: 2),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    );
+                  }else{
+                    return const Text('No name');
+                  }
+                },
             ),
+            
 
             const SizedBox(height: 24),
 
