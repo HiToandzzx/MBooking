@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
 import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-import '../auth/signin/viewmodel_signin.dart';
-import '../auth/signin/model_signin.dart';
+import '../auth/signin/viewmodel_user.dart';
+import '../auth/signin/model_user.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -41,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(45),
                               child: Image.network(
-                                user.picture,
+                                '${user.picture}',
                                 width: 90,
                                 height: 90,
                                 fit: BoxFit.cover,
@@ -58,7 +58,7 @@ class ProfilePage extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  user.username,
+                                  '${user.username}',
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
                                   size: 20,
                                 ),
                                 const SizedBox(width: 10),
-                                Text(user.phone),
+                                Text('${user.phone}'),
                               ],
                             ),
                             const SizedBox(height: 4),
@@ -91,7 +91,7 @@ class ProfilePage extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 10),
                                 Text(
-                                  user.email,
+                                  '${user.email}',
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(fontSize: 16),
                                 ),

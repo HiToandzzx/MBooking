@@ -8,7 +8,7 @@ import 'package:movies_app_ttcn/widgets/basic_text_field.dart';
 import 'package:movies_app_ttcn/widgets/checkbox.dart';
 import '../../bot_nav.dart';
 import '../signup/view_signup.dart';
-import 'viewmodel_signin.dart';
+import 'viewmodel_user.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

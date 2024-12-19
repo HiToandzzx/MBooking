@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/view/bot_nav.dart';
 import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
-import 'view/auth/signin/model_signin.dart';
-import 'view/auth/signin/viewmodel_signin.dart';
+import 'view/auth/signin/model_user.dart';
+import 'view/auth/signin/viewmodel_user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

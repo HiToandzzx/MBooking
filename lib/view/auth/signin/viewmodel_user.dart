@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'model_signin.dart';
+import 'model_user.dart';
 
 /*class SignInViewModel extends ChangeNotifier {
   bool _isLoading = false;
