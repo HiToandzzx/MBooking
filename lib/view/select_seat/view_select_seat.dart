@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:movies_app_ttcn/helper/nav_mess_profile.dart';
 import 'package:movies_app_ttcn/view/payment/view_payment_page.dart';
+
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/model/seat_model.dart';
 import 'package:movies_app_ttcn/model/seat_repositity.dart';

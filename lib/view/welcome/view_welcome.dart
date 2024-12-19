@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_app_ttcn/view/signin_signup/view_signup.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/widgets/movies/carousel_movies_login_page.dart';
 
-import '../signin_signup/view_signin.dart';
+import '../auth/signin/view_signin.dart';
+import '../auth/signup/view_signup.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -65,7 +65,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                   );
                 },
-                title: 'Sign in'
+                title: const Text('Sign in')
             ),
 
             const SizedBox(height: 16,),
