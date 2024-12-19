@@ -24,11 +24,11 @@ class WelcomePage extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 70),
-              child: LoginMoviesCarousel(),
+              // child: LoginMoviesCarousel(),
             ),
-
-            const SizedBox(height: 30,),
-
+            const SizedBox(
+              height: 30,
+            ),
             const Text(
               'MBooking hello!',
               style: TextStyle(
@@ -36,18 +36,18 @@ class WelcomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
-            const SizedBox(height: 20,),
-
+            const SizedBox(
+              height: 20,
+            ),
             const Text(
               'Enjoy your favorite movies',
               style: TextStyle(
                 fontSize: 16,
               ),
             ),
-
-            const SizedBox(height: 50,),
-
+            const SizedBox(
+              height: 50,
+            ),
             MainButton(
                 onPressed: () {
                   /*Navigator.push(
@@ -59,17 +59,17 @@ class WelcomePage extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => const SignInPage(),
+                      pageBuilder: (context, animation1, animation2) =>
+                          const SignInPage(),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),
                   );
                 },
-                title: const Text('Sign in')
+                title: const Text('Sign in')),
+            const SizedBox(
+              height: 16,
             ),
-
-            const SizedBox(height: 16,),
-
             BasicButton(
                 onPressed: () {
                   /*Navigator.push(
@@ -81,17 +81,17 @@ class WelcomePage extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => const SignUpPage(),
+                      pageBuilder: (context, animation1, animation2) =>
+                          const SignUpPage(),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),
                   );
                 },
-                title: 'Sign up'
+                title: 'Sign up'),
+            const SizedBox(
+              height: 25,
             ),
-
-            const SizedBox(height: 25,),
-
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Text(
