@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
+import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../auth/signin/viewmodel_user.dart';
@@ -40,12 +42,19 @@ class ProfilePage extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(45),
-                              child: Image.network(
-                                '${user.picture}',
-                                width: 90,
-                                height: 90,
-                                fit: BoxFit.cover,
-                              ),
+                              child: user.picture != null
+                                  ? Image.network(
+                                      user.picture!,
+                                      width: 90,
+                                      height: 90,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : SvgPicture.asset(
+                                      AppVector.userNull,
+                                      width: 90,
+                                      height: 90,
+                                    ),
+
                             )
                           ],
                         ),

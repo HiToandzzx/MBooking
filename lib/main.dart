@@ -32,6 +32,11 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.black54
         ),
 
+        // MÀU CON TRỎ TRONG TEXT FIELD
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.white,
+        ),
+
         // DISABLE ANIMATION
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
