@@ -27,7 +27,7 @@ class _BotNavState extends State<BotNav> {
             MoviePage(
               initialTabIndex: 0,
             ),
-            ProfilePage()
+            // ProfilePage()
           ],
         ),
         bottomNavigationBar: Container(
@@ -44,43 +44,38 @@ class _BotNavState extends State<BotNav> {
             currentIndex: index,
             items: const [
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.home_filled, color: Colors.amber, size: 30),
+                activeIcon:
+                    Icon(Icons.home_filled, color: Colors.amber, size: 30),
                 icon: Icon(Icons.home_filled, color: Colors.white, size: 30),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.confirmation_num, color: Colors.amber, size: 30),
-                icon: Icon(Icons.confirmation_num_outlined, color: Colors.white, size: 30),
+                activeIcon:
+                    Icon(Icons.confirmation_num, color: Colors.amber, size: 30),
+                icon: Icon(Icons.confirmation_num_outlined,
+                    color: Colors.white, size: 30),
                 label: "Ticket",
               ),
               BottomNavigationBarItem(
-                  activeIcon: Icon(Icons.movie_rounded, color: Colors.amber, size: 30),
-                  icon: Icon(Icons.movie_outlined, color: Colors.white, size: 30),
-                  label: "Movie"
-              ),
+                  activeIcon:
+                      Icon(Icons.movie_rounded, color: Colors.amber, size: 30),
+                  icon:
+                      Icon(Icons.movie_outlined, color: Colors.white, size: 30),
+                  label: "Movie"),
               BottomNavigationBarItem(
                   activeIcon: Icon(Icons.person, color: Colors.amber, size: 30),
-                  icon: Icon(Icons.perm_identity, color: Colors.white, size: 30),
-                  label: "Profile"
-              )
+                  icon:
+                      Icon(Icons.perm_identity, color: Colors.white, size: 30),
+                  label: "Profile")
             ],
-
             selectedItemColor: Colors.amber,
-
             onTap: (value) {
               setState(() {
                 index = value;
               });
             },
-
-            unselectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.bold
-            ),
-
-            selectedLabelStyle: const TextStyle(
-                fontWeight: FontWeight.bold
-            ),
-
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
             type: BottomNavigationBarType.fixed,
           ),
         ),

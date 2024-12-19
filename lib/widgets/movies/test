@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import '../../model/movie_model.dart';
+import '../../view/details_movie/view_details_movie.dart';
+import '../../view/tab_home/viewmodel_home.dart';
+import 'build_movie.dart';
+
+class NowPlayingMoviesCarousel extends StatelessWidget {
+  const NowPlayingMoviesCarousel({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Data>>(
+      future: MovieViewModel.fetchMovies(1), // Lấy phim Coming Soon (status = 1)
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.amber,
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              'Error: ${snapshot.error}',
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+        } else if (snapshot.hasData) {
+          return buildMovieList(snapshot.data!);
+        } else {
+          return const Center(
+            child: Text(
+              'No data available',
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+
