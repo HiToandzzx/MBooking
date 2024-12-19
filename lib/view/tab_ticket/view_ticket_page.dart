@@ -242,41 +242,4 @@ class _TicketPageState extends State<TicketPage> {
   }
 }
 
-class _InfoColumn extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
 
-  const _InfoColumn(
-      {Key? key,
-        required this.icon,
-        required this.title,
-        required this.subtitle})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 20, color: Colors.black54),
-        SizedBox(width: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16),
-            ),
-            Text(
-              subtitle,
-              style: TextStyle(color: Colors.black54, fontSize: 14),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
