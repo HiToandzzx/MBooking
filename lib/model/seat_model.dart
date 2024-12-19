@@ -96,6 +96,8 @@ class Showtime {
     day = json['day'];
   }
 
+
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['showtime_id'] = this.showtimeId;

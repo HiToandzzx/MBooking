@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:movies_app_ttcn/helper/nav_mess_profile.dart';
+
 import 'package:movies_app_ttcn/view/payment/view_payment_page.dart';
 
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
@@ -28,6 +28,12 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
     seatDataFuture = fetchSeatData();
   }
 
+  final Map<String, Color> seatColors = {
+    'available': Colors.grey.withOpacity(0.3),
+    'reserved': Colors.amber.withOpacity(0.2),
+    'selected': Colors.amber,
+  };
+
   void toggleSeatSelection(String seat) {
     setState(() {
       if (selectedSeats.contains(seat)) {
@@ -54,13 +60,34 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
           future: seatDataFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(color: Colors.amber,));
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data == null) {
               return const Center(child: Text('No data available'));
             } else{
               final seats = snapshot.data!.data!.seat!;
+              seats.sort((a, b) {
+                // Extract letter and number parts of the seat_number
+                final aMatch = RegExp(r'([A-Z]+)(\d+)').firstMatch(a.seatNumber!);
+                final bMatch = RegExp(r'([A-Z]+)(\d+)').firstMatch(b.seatNumber!);
+
+                if (aMatch != null && bMatch != null) {
+                  // Compare letters first
+                  final letterComparison = aMatch.group(1)!.compareTo(bMatch.group(1)!);
+                  if (letterComparison != 0) {
+                    return letterComparison;
+                  }
+
+                  // Compare numbers next
+                  final aNumber = int.parse(aMatch.group(2)!);
+                  final bNumber = int.parse(bMatch.group(2)!);
+                  return aNumber.compareTo(bNumber);
+                }
+
+                // Fallback to default string comparison if parsing fails
+                return a.seatNumber!.compareTo(b.seatNumber!);
+              });
               final cols = snapshot.data!.data!.col ?? 8;
 
               return Column(
@@ -104,6 +131,62 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                       },
                     ),
                   ),
+                  // TYPE OF SEATS
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(10.0),
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: seatColors['available'],
+                        ),
+                      ),
+                      const Text(
+                        'Available',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                      Container(
+                        margin: const EdgeInsets.all(10.0),
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: seatColors['reserved'],
+                        ),
+                      ),
+                      const Text(
+                        'Reserved',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                      Container(
+                        margin: const EdgeInsets.all(10.0),
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: seatColors['selected'],
+                        ),
+                      ),
+                      const Text(
+                        'Selected',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20,),
+
                   const SizedBox(height: 20),
                   const ListDate(),
                   const SizedBox(height: 20),
@@ -132,7 +215,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
             MainButton(
               onPressed: () {
                 if (selectedSeats.isEmpty) {
-                  showFalseSnackBar(context, 'No seat selected');
+                 SnackBar(content: Text('No selected seats'));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Selected Seats: ${selectedSeats.join(', ')}')),
@@ -143,7 +226,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                   );
                 }
               },
-              title: 'Buy ticket',
+              title: Text('Buy ticket'),
             ),
           ],
         ),
