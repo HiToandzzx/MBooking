@@ -153,14 +153,15 @@ class _SignInPageState extends State<SignInPage> {
                   const Text(
                     'Sign In',
                     style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber
                     ),
                   ),
-                  const SizedBox(height: 30,),
+                  const SizedBox(height: 40,),
                   CustomTextField(
                       controller: _emailController,
-                      labelText: 'Email'
+                      labelText: 'Email',
                   ),
                   const SizedBox(height: 20,),
                   CustomTextField(

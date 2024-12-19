@@ -37,11 +37,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 const Text(
                   'Sign Up',
                   style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 40,),
                 CustomTextField(
                     controller: _userNameController,
                     labelText: 'User name'
