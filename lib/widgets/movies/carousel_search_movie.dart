@@ -1,8 +1,9 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/widgets/movies/build_movie.dart';
 
-import '../../model/movie_model.dart';
-import '../../view/tab_home/viewmodel_home.dart';
+import '../../model/model_movie.dart';
+import '../../view/tab_home/viewmodel_movie.dart';
 
 class SearchMovieCarousel extends StatelessWidget {
   final String query;
@@ -46,3 +47,4 @@ class SearchMovieCarousel extends StatelessWidget {
     );
   }
 }
+*/

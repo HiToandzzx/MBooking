@@ -39,9 +39,9 @@ dependencies:
   http: ^1.2.0
   intl: ^0.18.0
   carousel_slider: ^5.0.0
-  image_picker: ^1.0.8
   shared_preferences: ^2.2.3
   rxdart: ^0.28.0
+  youtube_player_flutter: ^8.0.0
 
 dev_dependencies:
   flutter_test:

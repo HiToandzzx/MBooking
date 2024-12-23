@@ -1,5 +1,6 @@
+/*
 import 'package:flutter/material.dart';
-import '../../model/movie_model.dart';
+import '../../model/model_movie.dart';
 
 Widget buildDateList(List<Results> movies) {
   return ListView.builder(
@@ -12,14 +13,15 @@ Widget buildDateList(List<Results> movies) {
         child: Container(
           decoration: BoxDecoration(
             color: const Color(0xFF1C1C1C).withOpacity(0.7),
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BordearRadius.circular(30),
           ),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 const SizedBox(height: 8),
-                /*Text(
+                */
+/*Text(
                   movie.title!,
                   overflow: TextOverflow.clip,
                   style: const TextStyle(
@@ -28,7 +30,8 @@ Widget buildDateList(List<Results> movies) {
                       fontWeight: FontWeight.bold
                   ),
                 ),
-                const SizedBox(height: 10),*/
+                const SizedBox(height: 10),*//*
+
                 const Text('Dec'),
                 const SizedBox(height: 10),
                 Container(
@@ -85,4 +88,4 @@ Widget buildTimeList(List<Results> movies) {
       );
     },
   );
-}
+}*/

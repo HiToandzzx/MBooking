@@ -1,5 +1,6 @@
+/*
 import 'package:flutter/material.dart';
-import 'package:movies_app_ttcn/model/movie_model.dart';
+import 'package:movies_app_ttcn/model/model_movie.dart';
 
 // DIRECTOR
 Widget buildDirectorList(List<Results> movies) {
@@ -100,4 +101,4 @@ Widget buildActorList(List<Results> movies) {
       );
     },
   );
-}
+}*/

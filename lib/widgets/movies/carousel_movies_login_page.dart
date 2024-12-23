@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../../model/movie_model.dart';
-import '../../view/details_movie/view_details_movie.dart';
-import '../../view/tab_home/viewmodel_home.dart';
+import '../../model/model_movie.dart';
+import '../../view_model/viewmodel_movie.dart';
 import 'build_movie.dart';
 
-class NowPlayingMoviesCarousel extends StatelessWidget {
-  const NowPlayingMoviesCarousel({Key? key}) : super(key: key);
+class LoginMoviesCarousel extends StatelessWidget {
+  const LoginMoviesCarousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +27,15 @@ class NowPlayingMoviesCarousel extends StatelessWidget {
           );
         } else if (snapshot.hasData) {
           return SizedBox(
-            height: 600,
+            height: 300,
             child: CarouselSlider.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index, realIndex) {
                 Data movie = snapshot.data![index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailMoviePage(
-                          movie: movie,
-                        ),
-                      ),
-                    );
-                  },
-                  child: buildMovieCard(movie),
-                );
+                return buildMovieLogin(movie);
               },
               options: CarouselOptions(
-                height: 600,
+                height: 250,
                 viewportFraction: 0.8,
                 enlargeCenterPage: true,
                 enableInfiniteScroll: true,
