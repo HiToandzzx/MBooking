@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class OverviewText extends StatefulWidget {
+class StoryLineText extends StatefulWidget {
   final String text;
 
-  const OverviewText({Key? key, required this.text}) : super(key: key);
+  const StoryLineText({Key? key, required this.text}) : super(key: key);
 
   @override
-  OverviewTextState createState() => OverviewTextState();
+  StoryLineTextState createState() => StoryLineTextState();
 }
 
-class OverviewTextState extends State<OverviewText> {
+class StoryLineTextState extends State<StoryLineText> {
   bool _isExpanded = false;
 
   @override
@@ -19,7 +19,10 @@ class OverviewTextState extends State<OverviewText> {
       children: [
         Text(
           widget.text,
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(
+              fontSize: 18,
+            color: Colors.grey
+          ),
           maxLines: _isExpanded ? null : 3,
           overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
         ),

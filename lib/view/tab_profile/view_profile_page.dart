@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app_ttcn/view/tab_profile/view_change_pass_page.dart';
+import 'package:movies_app_ttcn/view/tab_profile/view_edit_profile_page.dart';
 import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-import '../auth/signin/viewmodel_user.dart';
-import '../auth/signin/model_user.dart';
+import '../../view_model/viewmodel_user.dart';
+import '../../model/model_user.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final SignInViewModel signInViewModel = SignInViewModel();
+  ProfilePageState createState() => ProfilePageState();
+}
 
+class ProfilePageState extends State<ProfilePage> {
+  late UserViewModel userViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    userViewModel = UserViewModel();
+  }
+
+  void _refreshUserData() {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 70, left: 16, right: 16),
         child: FutureBuilder<User?>(
-          future: signInViewModel.getCurrentUser(),
+          future: userViewModel.getCurrentUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -38,93 +55,110 @@ class ProfilePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // USER IMAGE
-                        Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(45),
-                              child: user.picture != null
-                                  ? Image.network(
-                                      user.picture!,
-                                      width: 90,
-                                      height: 90,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : SvgPicture.asset(
-                                      AppVector.userNull,
-                                      width: 90,
-                                      height: 90,
-                                    ),
-
-                            )
-                          ],
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(45),
+                            child: user.picture != null
+                                ? Image.network(
+                                    user.picture!,
+                                    width: 90,
+                                    height: 90,
+                                  )
+                                : SvgPicture.asset(
+                                    AppVector.userNull,
+                                    width: 90,
+                                    height: 90,
+                                  ),
+                          ),
                         ),
 
+                        const SizedBox(width: 20),
+
                         // USER INFO
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // USER NAME
-                            Row(
-                              children: [
-                                Text(
-                                  '${user.username}',
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // USER NAME
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      user.username,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
+                                ],
+                              ),
 
-                            // PHONE
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.phone_outlined,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 10),
-                                Text('${user.phone}'),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
+                              const SizedBox(height: 8),
 
-                            // EMAIL
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.mail_outlined,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  '${user.email}',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ],
+                              // PHONE
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.phone_outlined,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text('${user.phone}'),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+
+                              // EMAIL
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.mail_outlined,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      user.email,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
 
                         // EDIT PROFILE BUTTON
-                        IconButton(
-                          icon: const Icon(
-                            Icons.edit_note,
-                            color: Colors.white,
-                            size: 30,
+                        Expanded(
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.edit_note,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            onPressed: () async {
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfilePage(
+                                      user: user,
+                                      onProfileUpdated: _refreshUserData,
+                                    ),
+                                  )
+                              );
+                            },
                           ),
-                          onPressed: () {
-                            // Handle edit profile
-                          },
                         ),
                       ],
                     ),
                   ),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
 
                   // MAIN CONTENT
                   Expanded(
@@ -151,7 +185,12 @@ class ProfilePage extends StatelessWidget {
                           text: 'Change password',
                           isLastItem: false,
                           onTap: () {
-                            // Handle onTap
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ChangePasswordPage(),
+                                )
+                            );
                           },
                         ),
                         buildListTile(
@@ -166,16 +205,16 @@ class ProfilePage extends StatelessWidget {
                         const SizedBox(height: 40),
 
                         MainButton(
-                            onPressed: () async {
-                              await signInViewModel.logout();
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const WelcomePage(),
-                                  )
-                              );
-                            },
-                            title: const Text('Logout')
+                          onPressed: () async {
+                            await userViewModel.logout();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const WelcomePage(),
+                              ),
+                            );
+                          },
+                          title: const Text('Logout'),
                         ),
                       ],
                     ),
