@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 
@@ -185,10 +186,12 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
         child: MainButton(
           onPressed: () {
             if (selectedSeats.isEmpty) {
-              /*showFalseSnackBar(
+              */
+/*showFalseSnackBar(
                   context,
                   'No seat selected'
-              );*/
+              );*//*
+
             } else {
               Navigator.push(
                 context,
@@ -204,3 +207,4 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
     );
   }
 }
+*/

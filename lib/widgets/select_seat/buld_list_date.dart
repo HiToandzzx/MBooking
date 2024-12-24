@@ -1,7 +1,8 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/widgets/select_seat/widget_list_date_time.dart';
-import '../../model/movie_model.dart';
-import '../../view/tab_home/viewmodel_home.dart';
+import '../../model/model_movie.dart';
+import '../../view/tab_home/viewmodel_movie.dart';
 
 class ListDate extends StatelessWidget {
   const ListDate({Key? key}) : super(key: key);
@@ -43,3 +44,4 @@ class ListDate extends StatelessWidget {
     );
   }
 }
+*/

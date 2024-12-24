@@ -3,4 +3,5 @@ class AppVector {
   static const String format = '.svg';
 
   static const String logo = '${basePath}logo$format';
+  static const String userNull = '${basePath}user-null$format';
 }
