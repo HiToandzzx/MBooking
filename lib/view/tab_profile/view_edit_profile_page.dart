@@ -99,6 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             _pictureController.text,
                             width: 130,
                             height: 130,
+                            fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                               return const Icon(Icons.error, size: 100);
                             },

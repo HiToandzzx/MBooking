@@ -56,13 +56,15 @@ class ProfilePageState extends State<ProfilePage> {
                       children: [
                         // USER IMAGE
                         Expanded(
+                          flex: 1,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(45),
+                            borderRadius: BorderRadius.circular(50),
                             child: user.picture != null
                                 ? Image.network(
                                     user.picture!,
-                                    width: 90,
-                                    height: 90,
+                                    width: 100,
+                                    height: 110,
+                                    fit: BoxFit.cover,
                                   )
                                 : SvgPicture.asset(
                                     AppVector.userNull,
@@ -132,28 +134,6 @@ class ProfilePageState extends State<ProfilePage> {
                             ],
                           ),
                         ),
-
-                        // EDIT PROFILE BUTTON
-                        Expanded(
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.edit_note,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            onPressed: () async {
-                              await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditProfilePage(
-                                      user: user,
-                                      onProfileUpdated: _refreshUserData,
-                                    ),
-                                  )
-                              );
-                            },
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -165,6 +145,22 @@ class ProfilePageState extends State<ProfilePage> {
                     child: ListView(
                       children: [
                         buildListTile(
+                          icon: Icons.person,
+                          text: 'Edit Profile',
+                          isLastItem: false,
+                          onTap: () async {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditProfilePage(
+                                    user: user,
+                                    onProfileUpdated: _refreshUserData,
+                                  ),
+                                )
+                            );
+                          },
+                        ),
+                        buildListTile(
                           icon: Icons.confirmation_number_outlined,
                           text: 'My ticket',
                           isLastItem: false,
@@ -173,17 +169,9 @@ class ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                         buildListTile(
-                          icon: Icons.shopping_cart_outlined,
-                          text: 'Payment history',
-                          isLastItem: false,
-                          onTap: () {
-                            // Handle onTap
-                          },
-                        ),
-                        buildListTile(
                           icon: Icons.lock_outline,
                           text: 'Change password',
-                          isLastItem: false,
+                          isLastItem: true,
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -191,14 +179,6 @@ class ProfilePageState extends State<ProfilePage> {
                                     builder: (context) => const ChangePasswordPage(),
                                 )
                             );
-                          },
-                        ),
-                        buildListTile(
-                          icon: Icons.no_accounts,
-                          text: 'Delete account',
-                          isLastItem: true,
-                          onTap: () {
-                            // Handle onTap
                           },
                         ),
 

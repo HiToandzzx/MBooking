@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app_ttcn/helper/snack_bar.dart';
-import 'package:movies_app_ttcn/view/auth/view_forget_pass.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/widgets/basic_text_field.dart';
 import 'package:movies_app_ttcn/widgets/checkbox.dart';
 import '../../bot_nav/bot_nav.dart';
+import '../forget_password/view_request_email.dart';
 import '../signup/view_signup.dart';
 import '../../../view_model/viewmodel_user.dart';
 
@@ -113,13 +113,11 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation1, animation2) => const ForgetPassPage(),
-                                  transitionDuration: Duration.zero,
-                                  reverseTransitionDuration: Duration.zero,
-                                ),
+                                MaterialPageRoute(
+                                    builder: (context) => const EmailRequestPage(),
+                                )
                               );
                             },
                             child: const Text(
@@ -170,6 +168,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                 
                     const SizedBox(height: 20,),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
