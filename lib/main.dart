@@ -3,8 +3,10 @@ import 'package:movies_app_ttcn/view/bot_nav.dart';
 import 'package:movies_app_ttcn/view/welcome/view_welcome.dart';
 import 'view/auth/signin/model_user.dart';
 import 'view/auth/signin/viewmodel_user.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
+  Stripe.publishableKey = 'pk_test_51NnANvICFXSh1wtRd0oyTnWdPyPnv5RFYePJktzqAVwff8LpMAUr1XOfXV8cIM3Uoxi5IsbIUUAJw1YVMYTFpUov006DzGLZ6A'; // Publishable Key từ Stripe
   WidgetsFlutterBinding.ensureInitialized();
 
   User? currentUser = await SignInViewModel().getCurrentUser();

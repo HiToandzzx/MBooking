@@ -4,6 +4,7 @@ import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../../widgets/app_images.dart';
 import '../../widgets/select_seat/build_list_time.dart';
 import '../../widgets/select_seat/buld_list_date.dart';
+import '../payment_stripe/payment_details.dart';
 
 class SelectSeatPage extends StatefulWidget {
   const SelectSeatPage({super.key});
@@ -189,8 +190,11 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                   'No seat selected'
               );*/
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Selected Seats: ${selectedSeats.join(', ')}')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentScreen(),
+                ),
               );
             }
           },
