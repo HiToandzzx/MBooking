@@ -5,7 +5,7 @@ import 'package:movies_app_ttcn/helper/snack_bar.dart';
 import 'package:movies_app_ttcn/view/auth/forget_password/view_new_password.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-import '../../../helper/count_down.dart';
+import '../../../widgets/count_down.dart';
 import '../../../view_model/viewmodel_user.dart';
 import '../../../widgets/otp_text_field.dart';
 
