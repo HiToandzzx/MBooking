@@ -5,8 +5,8 @@ import 'package:movies_app_ttcn/helper/snack_bar.dart';
 import 'package:movies_app_ttcn/view/auth/forget_password/view_new_password.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-import 'package:movies_app_ttcn/widgets/basic_text_field.dart';
 import '../../../view_model/viewmodel_user.dart';
+import '../../../widgets/otp_text_field.dart';
 
 class OTPRequestPage extends StatefulWidget {
   final String email;
@@ -18,7 +18,7 @@ class OTPRequestPage extends StatefulWidget {
 }
 
 class _OTPRequestPageState extends State<OTPRequestPage> {
-  final _otpController = TextEditingController();
+  final _otpController = List.generate(6, (_) => TextEditingController());
   final _viewModel = UserViewModel();
 
   StreamSubscription<String?>? _successSubscription;
@@ -26,7 +26,7 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
 
   @override
   void dispose() {
-    _otpController.dispose();
+    //_otpController.dispose();
     _viewModel.dispose();
     _successSubscription?.cancel();
     _errorSubscription?.cancel();
@@ -54,7 +54,7 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Submit OTP form email',
+                      'Submit OTP from Email',
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -69,16 +69,16 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                       stream: _viewModel.detailedErrors,
                       builder: (context, snapshot) {
                         final errors = snapshot.data;
-                        return CustomTextField(
-                          controller: _otpController,
-                          labelText: 'OTP',
-                          keyboardType: TextInputType.number,
+                        return OTPInputField(
+                          controllers: _otpController,
+                          onCompleted: (otp) {
+                          },
                           errorText: errors != null && errors.containsKey('code') ? errors['code']?.join(', ') : null,
                         );
                       },
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
 
                     // BUTTON LOGIN
                     MainButton(
@@ -86,7 +86,7 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                         _successSubscription?.cancel();
                         _errorSubscription?.cancel();
 
-                        int otp = int.tryParse(_otpController.text) ?? 0;
+                        int otp = int.tryParse(_otpController.map((e) => e.text).join()) ?? 0;
 
                         await _viewModel.requestOTP(
                             widget.email,
@@ -108,7 +108,6 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                           }
                         });
 
-
                         _errorSubscription = _viewModel.errorMessage.listen((message) {
                           if (message != null) {
                             failedSnackBar(context: context, message: message);
@@ -117,7 +116,7 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                       },
                       title: isLoading
                           ? const CircularProgressIndicator(color: Colors.black)
-                          : const Text('Send'),
+                          : const Text('Submit'),
                     ),
                   ],
                 ),
