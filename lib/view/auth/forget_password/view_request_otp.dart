@@ -5,6 +5,7 @@ import 'package:movies_app_ttcn/helper/snack_bar.dart';
 import 'package:movies_app_ttcn/view/auth/forget_password/view_new_password.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
+import '../../../widgets/count_down.dart';
 import '../../../view_model/viewmodel_user.dart';
 import '../../../widgets/otp_text_field.dart';
 
@@ -26,7 +27,6 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
 
   @override
   void dispose() {
-    //_otpController.dispose();
     _viewModel.dispose();
     _successSubscription?.cancel();
     _errorSubscription?.cancel();
@@ -78,7 +78,24 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                       },
                     ),
 
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
+
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CountdownTimer(
+                            duration: const Duration(minutes: 10),
+                            onTimerComplete: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
 
                     // BUTTON LOGIN
                     MainButton(
@@ -116,7 +133,7 @@ class _OTPRequestPageState extends State<OTPRequestPage> {
                       },
                       title: isLoading
                           ? const CircularProgressIndicator(color: Colors.black)
-                          : const Text('Submit'),
+                          : const Text('Continue'),
                     ),
                   ],
                 ),
