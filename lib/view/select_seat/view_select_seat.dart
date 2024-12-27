@@ -1,37 +1,51 @@
-/*
 import 'package:flutter/material.dart';
+import 'package:movies_app_ttcn/helper/format_total_ticket.dart';
+import 'package:movies_app_ttcn/helper/snack_bar.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
-
+import '../../model/model_seats.dart';
+import '../../model/model_show_time.dart';
+import '../../view_model/viewmodel_seats.dart';
+import '../../view_model/viewmodel_show_time.dart';
 import '../../widgets/app_images.dart';
-import '../../widgets/select_seat/build_list_time.dart';
-import '../../widgets/select_seat/buld_list_date.dart';
+import '../../widgets/count_down.dart';
+import '../../widgets/select_seat/buld_show_times.dart';
+import 'package:flutter/scheduler.dart';
+import '../../widgets/select_seat/type_seats.dart';
+import '../payments/view_payments.dart';
 
 class SelectSeatPage extends StatefulWidget {
-  const SelectSeatPage({super.key});
+  final int filmId;
+
+  const SelectSeatPage({Key? key, required this.filmId}) : super(key: key);
 
   @override
   State<SelectSeatPage> createState() => _SelectSeatPageState();
 }
 
 class _SelectSeatPageState extends State<SelectSeatPage> {
-  final List<String> rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-  final List<String> cols = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
+  late final ShowtimeViewModel _showtimeViewModel;
+  late final SeatViewModel _seatViewModel;
 
-  final Map<String, Color> seatColors = {
-    'available': Colors.grey.withOpacity(0.3),
-    'reserved': Colors.amber.withOpacity(0.2),
-    'selected': Colors.amber,
-  };
+  List<Seats> selectedSeats = [];
+  final int seatPrice = 80000;
 
-  final List<String> reservedSeats = [
-    'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'E10', 'E11', 'E12',
-    'F7', 'F8', 'F9', 'F10',
-    'D6', 'D7', 'D8', 'D9', 'D10'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _showtimeViewModel = ShowtimeViewModel();
+    _seatViewModel = SeatViewModel();
+    _showtimeViewModel.fetchShowtimes(widget.filmId);
+  }
 
-  final List<String> selectedSeats = [];
+  @override
+  void dispose() {
+    _showtimeViewModel.dispose();
+    _seatViewModel.dispose();
+    super.dispose();
+  }
 
-  void toggleSeatSelection(String seat) {
+  // Method to handle seat selection and price calculation
+  void _toggleSeatSelection(Seats seat) {
     setState(() {
       if (selectedSeats.contains(seat)) {
         selectedSeats.remove(seat);
@@ -43,159 +57,224 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
 
   @override
   Widget build(BuildContext context) {
+    int totalPrice = selectedSeats.length * seatPrice;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Select Seat',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'Select Seats',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 10,),
-            // SCREEN
-            const Image(
-                image: AssetImage(AppImages.screen)
-            ),
-
-            // SEATS
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: cols.length,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 4,
-                  mainAxisSpacing: 4,
-                ),
-                itemCount: rows.length * cols.length,
-                itemBuilder: (context, index) {
-                  final row = rows[index ~/ cols.length];
-                  final col = cols[index % cols.length];
-                  final seat = '$row$col';
-
-                  Color seatColor = seatColors['available']!;
-                  if (reservedSeats.contains(seat)) {
-                    seatColor = seatColors['reserved']!;
-                  } else if (selectedSeats.contains(seat)) {
-                    seatColor = seatColors['selected']!;
+            // SHOW TIMES
+            SizedBox(
+              height: 200,
+              child: StreamBuilder<List<DataShowTimes>>(
+                stream: _showtimeViewModel.showtimesStream,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.amber),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('No showtimes available.'),
+                    );
+                  } else {
+                    final showtimes = snapshot.data!;
+                    return BuildShowTimes(
+                      showTimes: showtimes,
+                      onShowtimeSelected: (selectedDate, selectedTime) {
+                        // Use SchedulerBinding to ensure the setState happens after build
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          setState(() {
+                            selectedSeats.clear();
+                          });
+                          _seatViewModel.fetchSeats(selectedTime, selectedDate);
+                        });
+                      },
+                    );
                   }
-
-                  return GestureDetector(
-                    onTap: reservedSeats.contains(seat)
-                        ? null
-                        : () => toggleSeatSelection(seat),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: seatColor,
-                        borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: Colors.black, width: 0.5),
-                      ),
-                      child: Text(
-                        seat,
-                        style: const TextStyle(color: Colors.white, fontSize: 12),
-                      ),
-                    ),
-                  );
                 },
               ),
             ),
 
-            // TYPE OF SEATS
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                    color: seatColors['available'],
-                  ),
-                ),
-                const Text(
-                    'Available',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: seatColors['reserved'],
-                  ),
-                ),
-                const Text(
-                    'Reserved',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                    color: seatColors['selected'],
-                  ),
-                ),
-                const Text(
-                    'Selected',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ],
-            ),
+            Image.asset(AppImages.screen),
 
-            const SizedBox(height: 20,),
-
-            const Text(
-              'Select Date & Time',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18
+            // SEATS
+            SizedBox(
+              height: 270,
+              child: StreamBuilder<List<Seats>>(
+                stream: _seatViewModel.seatsStream,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.amber),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('No seats available.'),
+                    );
+                  } else {
+                    final seats = snapshot.data!;
+                    return GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 10,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 6,
+                        mainAxisSpacing: 6,
+                      ),
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: seats.length,
+                      itemBuilder: (context, index) {
+                        final seat = seats[index];
+                        bool isSelected = selectedSeats.contains(seat);
+                        return GestureDetector(
+                          onTap: seat.status == 'available'
+                              ? () {
+                                  _toggleSeatSelection(seat);
+                                  print(seat.seatId);
+                                }
+                              : null,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? Colors.amber
+                                  : (seat.status == 'available' ? Colors.grey[800] : Colors.amber[100]),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              seat.seatNumber ?? '',
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Colors.black
+                                    : (seat.status == 'available' ? Colors.white : Colors.black),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
 
-            const SizedBox(height: 20,),
+            // TYPE SEATS
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TypeSeats(label: 'Available', color: Colors.grey[800]!),
+                    TypeSeats(label: 'Reserved', color: Colors.amber[100]!),
+                    const TypeSeats(label: 'Selected', color: Colors.amber),
+                  ],
+                ),
+              ),
+            ),
 
-            const ListDate(),
+            const SizedBox(height: 40,),
 
-            const SizedBox(height: 20,),
+            // AMOUNT
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.monetization_on,
+                      size: 30,
+                      color: Colors.amber,
+                    ),
+                    const SizedBox(width: 10,),
+                    const Text(
+                      'Total: ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16
+                      ),
+                    ),
+                    Text(
+                      formatCurrency(totalPrice),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.amber
+                      ),
+                    )
+                  ],
+                ),
 
-            const ListTime(),
-
-            const SizedBox(height: 20,),
+                // COUNT DOWN
+                Column(
+                  children: [
+                    CountdownTimer(
+                      duration: const Duration(minutes: 10),
+                      onTimerComplete: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: MainButton(
-          onPressed: () {
+          onPressed: () async {
             if (selectedSeats.isEmpty) {
-              */
-/*showFalseSnackBar(
-                  context,
-                  'No seat selected'
-              );*//*
-
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Selected Seats: ${selectedSeats.join(', ')}')),
+              failedSnackBar(
+                  context: context,
+                  message: 'Please select at least one seat!'
               );
+              return;
             }
+
+            // GET LIST seatId
+            final selectedSeatIds = selectedSeats.map((seat) => seat.seatId).toList();
+
+            // GET showtimeId FROM SeatViewModel
+            final infoData = await _seatViewModel.infoStream.first;
+            final selectedShowtimeId = infoData?.showtimeId;
+
+            if (selectedShowtimeId == null) {
+              failedSnackBar(
+                  context: context,
+                  message: 'Showtime ID not found!'
+              );
+              return;
+            }
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PaymentPage(
+                  seatIds: selectedSeatIds,
+                  showtimeId: selectedShowtimeId,
+                ),
+              ),
+            );
           },
           title: const Text('Buy ticket'),
         ),
@@ -203,4 +282,5 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
     );
   }
 }
-*/
+
+

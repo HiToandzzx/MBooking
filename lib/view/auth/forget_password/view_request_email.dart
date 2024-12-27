@@ -110,6 +110,35 @@ class _EmailRequestPageState extends State<EmailRequestPage> {
                           ? const CircularProgressIndicator(color: Colors.black,)
                           : const Text('Request'),
                     ),
+
+                    const SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Back to',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(
+                                context,
+                              );
+                            },
+                            child: const Text(
+                              'Sign in',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.amber
+                              ),
+                            )
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
