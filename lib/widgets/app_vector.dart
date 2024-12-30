@@ -4,5 +4,6 @@ class AppVector {
 
   static const String logo = '${basePath}logo$format';
   static const String userNull = '${basePath}user-null$format';
-  static const String cgvLogo = '${basePath}Cgv_logo$format';
+  static const String seat = '${basePath}seat$format';
+  static const String calendar = '${basePath}calendar$format';
 }
