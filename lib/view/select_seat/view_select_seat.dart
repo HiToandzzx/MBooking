@@ -272,6 +272,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                 builder: (context) => PaymentPage(
                   seatIds: selectedSeatIds,
                   showtimeId: selectedShowtimeId,
+                  amount: totalPrice,
                 ),
               ),
             );

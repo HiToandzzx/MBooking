@@ -23,7 +23,7 @@ class _BotNavState extends State<BotNav> {
           index: index,
           children: const [
             HomePage(),
-            TicketPage(),
+            TicketHistoryPage(),
             MoviePage(
               initialTabIndex: 0,
             ),
