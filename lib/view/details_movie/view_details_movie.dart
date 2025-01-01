@@ -374,6 +374,7 @@ import '../../helper/format_time.dart';
 import '../../model/model_movie.dart';
 import '../../widgets/detail_movie/build_cinema.dart';
 import '../../widgets/detail_movie/build_list_actor_director.dart';
+import '../payment_stripe/payment_form.dart';
 import '../trailer/watch_trailer.dart';
 
 class DetailMoviePage extends StatefulWidget {
@@ -697,12 +698,12 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: MainButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const SelectSeatPage(),
-                    //     )
-                    // );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PaymentForm(),
+                        )
+                    );
                   },
                   title: const Text('Continue'),
                 ),
