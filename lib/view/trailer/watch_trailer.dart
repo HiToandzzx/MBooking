@@ -27,6 +27,7 @@ class TrailerPageState extends State<TrailerPage> {
       flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
+        loop: false,
       ),
     );
 
@@ -60,6 +61,7 @@ class TrailerPageState extends State<TrailerPage> {
           : AppBar(
               title: const Text("Trailer"),
               backgroundColor: Colors.black,
+              centerTitle: true,
             ),
       body: Column(
         children: [

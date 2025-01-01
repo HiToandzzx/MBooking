@@ -14,12 +14,9 @@ class PaymentForm extends StatelessWidget {
         Uri.parse('http://192.168.3.29:3000/api/create-payment-intent'),
         body: {'amount': '2000', 'booking_id': '123'}, // Số tiền và dữ liệu booking
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final paymentIntent = jsonDecode(response.body);
         final clientSecret = paymentIntent['clientSecret'];
-        print(response);
-        print(paymentIntent);
 
         // Cấu hình PaymentSheet
         await Stripe.instance.initPaymentSheet(
@@ -36,6 +33,7 @@ class PaymentForm extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Payment Successful')),
         );
+
       } else {
         throw Exception('Failed to load payment intent');
       }

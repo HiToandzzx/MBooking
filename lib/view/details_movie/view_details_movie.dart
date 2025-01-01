@@ -372,8 +372,8 @@ import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/widgets/detail_movie/build_list_genre.dart';
 import '../../helper/format_time.dart';
 import '../../model/model_movie.dart';
-import '../../widgets/detail_movie/build_cinema.dart';
 import '../../widgets/detail_movie/build_list_actor_director.dart';
+import '../select_seat/view_select_seat.dart';
 import '../payment_stripe/payment_form.dart';
 import '../trailer/watch_trailer.dart';
 
@@ -663,29 +663,7 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                               // LIST ACTOR
                               ListActorDirector(actors: widget.movie.actor!,),
 
-                              const SizedBox(height: 30),
-
-                              const Text(
-                                'Cinema',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                              const SizedBox(height: 20),
-
-                              const Column(
-                                children: [
-                                  CinemaItem(
-                                    cinemaName: 'Vincom Ocean Park CGV',
-                                    cinemaDetails:
-                                    '4.55 km | Da Ton, Gia Lam, Ha Noi',
-                                    icon: Icons.local_movies,
-                                    backgroundColor: Color(0xFF1C1C1C),
-                                  ),
-                                ],
-                              ),
+                              const SizedBox(height: 10),
                             ],
                           ),
                         ],
@@ -701,7 +679,7 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const PaymentForm(),
+                            builder: (context) => SelectSeatPage(filmId: widget.movie.id!),
                         )
                     );
                   },

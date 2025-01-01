@@ -226,6 +226,127 @@ class UserViewModel {
     }
   }
 
+  // FORGET PASSWORD
+  // REQUEST EMAIL
+  Future<void> requestEmail(String email) async {
+    _isLoading.add(true);
+    _errorMessage.add(null);
+    _successMessage.add(null);
+    _detailedErrors.add(null);
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://lolifashion.social/api/password/request-reset-code'),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({'email': email}),
+      );
+
+      final data = jsonDecode(response.body);
+      final authResponse = AuthResponse.fromJson(data);
+
+      if (authResponse.success == true) {
+        _successMessage.add(authResponse.message);
+      } else {
+        if (authResponse.errors != null) {
+          final parsedErrors = authResponse.errors!.map(
+                (key, value) => MapEntry(key, List<String>.from(value as List)),
+          );
+          _detailedErrors.add(Map<String, List<String>>.from(parsedErrors));
+        }
+        _errorMessage.add(authResponse.message);
+      }
+    } catch (e) {
+      _errorMessage.add('An unexpected error occurred: $e');
+    } finally {
+      _isLoading.add(false);
+    }
+  }
+
+  Future<void> requestOTP(String email, int code) async {
+    _isLoading.add(true);
+    _errorMessage.add(null);
+    _successMessage.add(null);
+    _detailedErrors.add(null);
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://lolifashion.social/api/password/verify-reset-code'),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+          'code': code,
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+      final authResponse = AuthResponse.fromJson(data);
+
+      if (authResponse.success == true) {
+        _successMessage.add(authResponse.message);
+      } else {
+        if (authResponse.errors != null) {
+          final parsedErrors = authResponse.errors!.map(
+                (key, value) => MapEntry(key, List<String>.from(value as List)),
+          );
+          _detailedErrors.add(Map<String, List<String>>.from(parsedErrors));
+        }
+        _errorMessage.add(authResponse.message);
+      }
+    } catch (e) {
+      _errorMessage.add('An unexpected error occurred: $e');
+    } finally {
+      _isLoading.add(false);
+    }
+  }
+
+  Future<void> resetPassword(String email, int code, String newPassword, String confirmNewPassword) async {
+    _isLoading.add(true);
+    _errorMessage.add(null);
+    _successMessage.add(null);
+    _detailedErrors.add(null);
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://lolifashion.social/api/password/reset-password'),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+          'code': code,
+          'password': newPassword,
+          'password_confirmation': confirmNewPassword
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+      final authResponse = AuthResponse.fromJson(data);
+
+      if (authResponse.success == true) {
+        _successMessage.add(authResponse.message);
+      } else {
+        if (authResponse.errors != null) {
+          final parsedErrors = authResponse.errors!.map(
+                (key, value) => MapEntry(key, List<String>.from(value as List)),
+          );
+          _detailedErrors.add(Map<String, List<String>>.from(parsedErrors));
+        }
+        _errorMessage.add(authResponse.message);
+      }
+    } catch (e) {
+      _errorMessage.add('An unexpected error occurred: $e');
+    } finally {
+      _isLoading.add(false);
+    }
+  }
+
   // LOGOUT
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();

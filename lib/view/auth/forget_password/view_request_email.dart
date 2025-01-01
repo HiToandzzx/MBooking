@@ -2,25 +2,21 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app_ttcn/helper/snack_bar.dart';
+import 'package:movies_app_ttcn/view/auth/forget_password/view_request_otp.dart';
 import 'package:movies_app_ttcn/widgets/app_vector.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import 'package:movies_app_ttcn/widgets/basic_text_field.dart';
-import 'package:movies_app_ttcn/widgets/checkbox.dart';
-import '../../bot_nav/bot_nav.dart';
-import '../forget_password/view_request_email.dart';
-import '../signup/view_signup.dart';
 import '../../../view_model/viewmodel_user.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class EmailRequestPage extends StatefulWidget {
+  const EmailRequestPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<EmailRequestPage> createState() => _EmailRequestPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _EmailRequestPageState extends State<EmailRequestPage> {
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   final _viewModel = UserViewModel();
 
   StreamSubscription<String?>? _successSubscription;
@@ -29,7 +25,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void dispose() {
     _emailController.dispose();
-    _passwordController.dispose();
     _viewModel.dispose();
     _successSubscription?.cancel();
     _errorSubscription?.cancel();
@@ -57,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Sign In',
+                      'Forget Password',
                       style: TextStyle(
                           fontSize: 35,
                           fontWeight: FontWeight.bold,
@@ -65,7 +60,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ),
                     const SizedBox(height: 40,),
-                
+
                     // EMAIL
                     StreamBuilder<Map<String, List<String>>?>(
                       stream: _viewModel.detailedErrors,
@@ -78,84 +73,33 @@ class _SignInPageState extends State<SignInPage> {
                         );
                       },
                     ),
-                
+
                     const SizedBox(height: 20,),
-                
-                    // PASSWORD
-                    StreamBuilder<Map<String, List<String>>?>(
-                      stream: _viewModel.detailedErrors,
-                      builder: (context, snapshot) {
-                        final errors = snapshot.data;
-                        return CustomTextField(
-                          controller: _passwordController,
-                          labelText: 'Password',
-                          obscureText: true,
-                          errorText: errors != null && errors.containsKey('password') ? errors['password']?.join(', ') : null,
-                        );
-                      },
-                    ),
-                    
-                    const SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            CustomCheckbox(),
-                            Text(
-                              'Remember me',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ],
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const EmailRequestPage(),
-                                )
-                              );
-                            },
-                            child: const Text(
-                              'Forget password',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white
-                              ),
-                            )
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 20,),
-                
+
                     // BUTTON LOGIN
                     MainButton(
                       onPressed: () async {
                         _successSubscription?.cancel();
                         _errorSubscription?.cancel();
-                
-                        await _viewModel.signIn(
+
+                        await _viewModel.requestEmail(
                           _emailController.text,
-                          _passwordController.text,
                         );
-                
+
                         _successSubscription = _viewModel.successMessage.listen((message) {
                           if (message != null) {
                             successSnackBar(context: context, message: message);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const BotNav(),
+                                builder: (context) => OTPRequestPage(
+                                  email: _emailController.text,
+                                ),
                               ),
                             );
                           }
                         });
-                
+
                         _errorSubscription = _viewModel.errorMessage.listen((message) {
                           if (message != null) {
                             failedSnackBar(context: context, message: message);
@@ -164,16 +108,15 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       title: isLoading
                           ? const CircularProgressIndicator(color: Colors.black,)
-                          : const Text('Sign In'),
+                          : const Text('Request'),
                     ),
-                
-                    const SizedBox(height: 20,),
 
+                    const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Not a member?',
+                          'Back to',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold
@@ -181,24 +124,19 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
+                              Navigator.pop(
                                 context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation1, animation2) => const SignUpPage(),
-                                  transitionDuration: Duration.zero,
-                                  reverseTransitionDuration: Duration.zero,
-                                ),
                               );
                             },
                             child: const Text(
-                              'Sign up now',
+                              'Sign in',
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.amber
                               ),
                             )
-                        ),
+                        )
                       ],
                     ),
                   ],
