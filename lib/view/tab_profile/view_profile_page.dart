@@ -8,6 +8,7 @@ import 'package:movies_app_ttcn/widgets/build_list_title_profile_tab.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../../view_model/viewmodel_user.dart';
 import '../../model/model_user.dart';
+import '../tab_ticket/view_ticket_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -165,7 +166,12 @@ class ProfilePageState extends State<ProfilePage> {
                           text: 'My ticket',
                           isLastItem: false,
                           onTap: () {
-                            // Handle onTap
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketHistoryPage(),
+                                )
+                            );
                           },
                         ),
                         buildListTile(

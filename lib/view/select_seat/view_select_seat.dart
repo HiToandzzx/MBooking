@@ -223,7 +223,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                 ),
 
                 // COUNT DOWN
-                Column(
+                /*Column(
                   children: [
                     CountdownTimer(
                       duration: const Duration(minutes: 10),
@@ -232,7 +232,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                       },
                     ),
                   ],
-                ),
+                ),*/
               ],
             ),
           ],
