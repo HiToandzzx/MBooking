@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../model/model_tickets_history.dart';
 import '../../view_model/viewmodel_tickets_history.dart';
-import '../tickets_detail/view_tickets_detail.dart';
+import 'view_tickets_detail.dart';
 
 class TicketHistoryPage extends StatefulWidget {
   const TicketHistoryPage({super.key});
@@ -48,7 +48,22 @@ class TicketHistoryPageState extends State<TicketHistoryPage> {
               final dataTickets = snapshot.data!;
               final films = dataTickets.film;
               if (films == null || films.isEmpty) {
-                return const Center(child: Text("No films found"));
+                return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.tv_off, size: 100, color: Colors.amber,),
+                        SizedBox(height: 10,),
+                        Text(
+                          "Tickets is empty",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    )
+                );
               }
               return ListView.builder(
                 itemCount: films.length,

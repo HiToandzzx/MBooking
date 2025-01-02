@@ -44,7 +44,6 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
     super.dispose();
   }
 
-  // Method to handle seat selection and price calculation
   void _toggleSeatSelection(Seats seat) {
     setState(() {
       if (selectedSeats.contains(seat)) {
@@ -252,7 +251,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
             }
 
             // GET LIST seatId
-            final selectedSeatIds = selectedSeats.map((seat) => seat.seatId).toList();
+            final selectedSeatIds = selectedSeats.map((seat) => seat.seatId).toList().join(',');
 
             // GET showtimeId FROM SeatViewModel
             final infoData = await _seatViewModel.infoStream.first;

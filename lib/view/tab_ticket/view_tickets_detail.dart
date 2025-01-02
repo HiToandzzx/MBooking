@@ -6,6 +6,7 @@ import '../../helper/format_currency.dart';
 import '../../helper/format_time.dart';
 import '../../view_model/viewmodel_tickets_detail.dart';
 import '../../model/model_tickets_detail.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class TicketDetailPage extends StatefulWidget {
   final int bookingId;
@@ -59,8 +60,8 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                   fit: BoxFit.cover,
                 ),
                 Positioned(
-                  top: 90,
-                  left: 50,
+                  top: 80,
+                  left: 55,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -271,24 +272,41 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         ],
                       ),
 
-                      const SizedBox(height: 170),
+                      //const SizedBox(height: 115),
 
                       // ORDER ID
-                      SizedBox(
-                        width: 300,
-                        child: Text(
-                          detail.orderId ?? 'Unknown',
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+
                     ],
                   ),
                 ),
+                Positioned(
+                    top: 645,
+                    left: 55,
+                    child: SizedBox(
+                      width: 300,
+                      child: Column(
+                        children: [
+                          BarcodeWidget(
+                            data: detail.orderId!,
+                            barcode: Barcode.code128(),
+                            width: 280,
+                            height: 70,
+                            drawText: false,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'Order ID: ${detail.orderId ?? 'Unknown'}',
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                )
               ],
             );
           }
