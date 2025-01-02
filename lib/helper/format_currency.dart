@@ -6,7 +6,7 @@ String formatCurrency(String numberStr) {
 
     final NumberFormat formatter = NumberFormat.currency(
       locale: 'vi_VN',
-      symbol: 'VNĐ',
+      symbol: 'VND',
       decimalDigits: 0,
     );
     return formatter.format(number);
