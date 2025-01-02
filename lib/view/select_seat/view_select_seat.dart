@@ -256,6 +256,7 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
             // GET showtimeId FROM SeatViewModel
             final infoData = await _seatViewModel.infoStream.first;
             final selectedShowtimeId = infoData?.showtimeId;
+            final startTime = infoData?.startTime;
 
             if (selectedShowtimeId == null) {
               failedSnackBar(
@@ -271,7 +272,8 @@ class _SelectSeatPageState extends State<SelectSeatPage> {
                 builder: (context) => PaymentPage(
                   seatIds: selectedSeatIds,
                   showtimeId: selectedShowtimeId,
-                  amount: totalPrice,
+                  amount: totalPrice.toString(),
+                  startTime: startTime,
                 ),
               ),
             );

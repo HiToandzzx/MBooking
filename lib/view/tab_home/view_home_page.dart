@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_ttcn/widgets/movies/carousel_movie_cooming_soon.dart';
 import '../../widgets/movies/carousel_movie_now_playing.dart';
+import '../../widgets/movies/carousel_search_movie.dart';
 import '../tab_movie/view_movie_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -132,107 +133,105 @@ class _HomePageState extends State<HomePage> {
             // MAIN CONTENT
             Expanded(
               child:
-              //  _searchQuery.isNotEmpty
-              //     ?
-              //     SearchMovieCarousel(query: _searchQuery)
-              //     :
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Now Playing',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MoviePage(
-                                  initialTabIndex: 0,
-                                ),
-                              ),
-                            );
-                          },
-                          child: const Row(
-                            children: [
-                              Text(
-                                'See all',
-                                style: TextStyle(
-                                  color: Color(0xFFFCC434),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_right,
-                                color: Colors.amber,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+               _searchQuery.isNotEmpty
+                  ? SearchMovieCarousel(query: _searchQuery)
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             const Text(
+                               'Now Playing',
+                               style: TextStyle(
+                                 color: Colors.white,
+                                 fontSize: 24,
+                                 fontWeight: FontWeight.bold,
+                               ),
+                             ),
+                             TextButton(
+                               onPressed: () {
+                                 Navigator.push(
+                                   context,
+                                   MaterialPageRoute(
+                                     builder: (context) => const MoviePage(
+                                       initialTabIndex: 0,
+                                     ),
+                                   ),
+                                 );
+                               },
+                               child: const Row(
+                                 children: [
+                                   Text(
+                                     'See all',
+                                     style: TextStyle(
+                                       color: Color(0xFFFCC434),
+                                       fontSize: 18,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                   Icon(
+                                     Icons.keyboard_arrow_right,
+                                     color: Colors.amber,
+                                   )
+                                 ],
+                               ),
+                             ),
+                           ],
+                         ),
 
-                    const SizedBox(height: 20),
+                         const SizedBox(height: 20),
 
-                    // NOW PLAYING
-                    const NowPlayingMoviesCarousel(),
+                         // NOW PLAYING
+                         const NowPlayingMoviesCarousel(),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Coming soon',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MoviePage(
-                                  initialTabIndex: 1,
-                                ),
-                              ),
-                            );
-                          },
-                          child: const Row(
-                            children: [
-                              Text(
-                                'See all',
-                                style: TextStyle(
-                                  color: Color(0xFFFCC434),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_right,
-                                color: Colors.amber,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             const Text(
+                               'Coming soon',
+                               style: TextStyle(
+                                 color: Colors.white,
+                                 fontSize: 24,
+                                 fontWeight: FontWeight.bold,
+                               ),
+                             ),
+                             TextButton(
+                               onPressed: () {
+                                 Navigator.push(
+                                   context,
+                                   MaterialPageRoute(
+                                     builder: (context) => const MoviePage(
+                                       initialTabIndex: 1,
+                                     ),
+                                   ),
+                                 );
+                               },
+                               child: const Row(
+                                 children: [
+                                   Text(
+                                     'See all',
+                                     style: TextStyle(
+                                       color: Color(0xFFFCC434),
+                                       fontSize: 18,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                   Icon(
+                                     Icons.keyboard_arrow_right,
+                                     color: Colors.amber,
+                                   )
+                                 ],
+                               ),
+                             ),
+                           ],
+                         ),
 
-                    // COMING SOON
-                    const ComingSoonMovieCarousel(),
-                  ],
-                ),
-              ),
+                         // COMING SOON
+                         const ComingSoonMovieCarousel(),
+                       ],
+                     ),
+               ),
             ),
           ],
         ),
