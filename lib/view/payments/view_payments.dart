@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_ttcn/widgets/app_images.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../../helper/format_currency.dart';
 import '../../model/model_payments.dart';
@@ -291,7 +292,65 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ),
                                 ),
 
-                                const SizedBox(height: 30,),
+                                const SizedBox(height: 40,),
+
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Payment Method',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(height: 20,),
+
+
+                                Container(
+                                  width: double.infinity,
+                                  height: 80,
+                                  padding: const EdgeInsets.only(left: 15, right: 5),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF1C1C1C),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        AppImages.logoStripe,
+                                        width: 86,
+                                        height: 48,
+                                      ),
+                                      const SizedBox(width: 15,),
+                                      const Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              'International payments',
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                            '(Visa, Master, JCB, Amex)',
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      const Icon(Icons.navigate_next, size: 40,)
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(height: 40,),
 
                                 MainButton(
                                     onPressed: () {
