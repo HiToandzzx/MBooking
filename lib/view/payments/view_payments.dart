@@ -46,7 +46,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false, // CHẶN KHÔNG CHO NGƯỜI DÙNG POP VỀ
+      canPop: false, // CHẶN KHÔNG CHO NGƯỜI DÙNG BACK VỀ
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Payment'),
