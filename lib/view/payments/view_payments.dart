@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_ttcn/helper/snack_bar.dart';
 import 'package:movies_app_ttcn/widgets/app_images.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../../helper/format_currency.dart';
@@ -26,6 +27,13 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   late final PaymentsViewModel _paymentsViewModel;
   int? _bookingId;
+  bool _isSelected = false;
+
+  void _selectPaymentMethod() {
+    setState(() {
+      _isSelected = !_isSelected;
+    });
+  }
 
   @override
   void initState() {
@@ -309,44 +317,49 @@ class _PaymentPageState extends State<PaymentPage> {
                                 const SizedBox(height: 20,),
 
 
-                                Container(
-                                  width: double.infinity,
-                                  height: 80,
-                                  padding: const EdgeInsets.only(left: 15, right: 5),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF1C1C1C),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        AppImages.logoStripe,
-                                        width: 86,
-                                        height: 48,
+                                GestureDetector(
+                                  onTap: _selectPaymentMethod,
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 80,
+                                    padding: const EdgeInsets.only(left: 15, right: 5),
+                                    decoration: BoxDecoration(
+                                      //color: const Color(0xFF1C1C1C),
+                                      color: _isSelected ? Colors.amber.withOpacity(0.2) : const Color(0xFF1C1C1C),
+                                      borderRadius: BorderRadius.circular(16),
+                                      border: Border.all(
+                                        color: _isSelected ? Colors.amber : Colors.transparent,
+                                        width: 2,
                                       ),
-                                      const SizedBox(width: 15,),
-                                      const Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          AppImages.logoStripe,
+                                          width: 86,
+                                          height: 48,
+                                        ),
+                                        const SizedBox(width: 15),
+                                        const Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
                                               'International payments',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold
+                                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                                             ),
-                                          ),
-                                          Text(
-                                            '(Visa, Master, JCB, Amex)',
-                                            style: TextStyle(
+                                            Text(
+                                              '(Visa, Master, JCB, Amex)',
+                                              style: TextStyle(
                                                 fontSize: 13,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      const Icon(Icons.navigate_next, size: 40,)
-                                    ],
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        const Icon(Icons.navigate_next, size: 40),
+                                      ],
+                                    ),
                                   ),
                                 ),
 
@@ -354,7 +367,13 @@ class _PaymentPageState extends State<PaymentPage> {
 
                                 MainButton(
                                     onPressed: () {
-
+                                      if (!_isSelected) {
+                                        failedSnackBar(
+                                            context: context,
+                                            message: 'Please select payment method'
+                                        );
+                                      } else {
+                                      }
                                     },
                                     title: const Text('Continue')
                                 )
