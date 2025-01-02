@@ -57,9 +57,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 await _paymentsViewModel.cancelPayments(bookingId: _bookingId!);
                 Navigator.pop(context);
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Booking ID is not available!')),
-                );
+                return;
               }
             },
             icon: const Icon(Icons.arrow_back_outlined),
