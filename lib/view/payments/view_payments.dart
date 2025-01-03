@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:movies_app_ttcn/helper/snack_bar.dart';
+import 'package:movies_app_ttcn/view/bot_nav/bot_nav.dart';
 import 'package:movies_app_ttcn/widgets/app_images.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../../helper/format_currency.dart';
 import '../../model/model_payments.dart';
 import '../../view_model/viewmodel_payments.dart';
+import '../../view_model/viewmodel_stripe.dart';
 
 class PaymentPage extends StatefulWidget {
   final String? seatIds;
@@ -26,8 +29,12 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   late final PaymentsViewModel _paymentsViewModel;
+
+  late final PaymentStripeViewModel _stripeViewModel;
+
   int? _bookingId;
   bool _isSelected = false;
+  bool _isLoadingPayment = false;
 
   void _selectPaymentMethod() {
     setState(() {
@@ -38,6 +45,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   void initState() {
     super.initState();
+    _stripeViewModel = PaymentStripeViewModel();
     _paymentsViewModel = PaymentsViewModel();
     _paymentsViewModel.fetchPayments(
       seatIds: widget.seatIds,
@@ -49,7 +57,59 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   void dispose() {
     _paymentsViewModel.dispose();
+    _stripeViewModel.dispose();
     super.dispose();
+  }
+
+  Future<void> _handleStripePayment(String orderId, String amount, int bookingId) async {
+    setState(() {
+      _isLoadingPayment = true;
+    });
+
+    try {
+      await _stripeViewModel.fetchPaymentStripe(
+        orderId: orderId,
+        amount: amount,
+        bookingId: bookingId,
+      );
+
+      final clientSecret = await _stripeViewModel.clientSecretStream.first;
+
+      if (clientSecret == null) {
+        print('Failed to get client secret.');
+        return;
+      }
+
+      // Initialize PaymentSheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: clientSecret,
+          merchantDisplayName: 'Your Merchant Name',
+        ),
+      );
+
+      // Display PaymentSheet
+      await Stripe.instance.presentPaymentSheet();
+
+      successSnackBar(
+          context: context,
+          message: 'Payment successful!'
+      );
+
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BotNav(),
+          )
+      );
+
+    } catch (e) {
+      return;
+    } finally {
+      setState(() {
+        _isLoadingPayment = false;
+      });
+    }
   }
 
   @override
@@ -365,7 +425,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
                                 const SizedBox(height: 40,),
 
-                                MainButton(
+                                /*MainButton(
                                     onPressed: () {
                                       if (!_isSelected) {
                                         failedSnackBar(
@@ -373,10 +433,39 @@ class _PaymentPageState extends State<PaymentPage> {
                                             message: 'Please select payment method'
                                         );
                                       } else {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => StripeForm(
+                                                    orderId: data.orderId!,
+                                                    bookingId: _bookingId!,
+                                                    amount: data.amount!
+                                                ),
+                                            )
+                                        );
                                       }
                                     },
                                     title: const Text('Continue')
-                                )
+                                )*/
+                                _isLoadingPayment
+                                    ? const CircularProgressIndicator(color: Colors.amber)
+                                    : MainButton(
+                                      onPressed: () {
+                                        if (!_isSelected) {
+                                          failedSnackBar(
+                                            context: context,
+                                            message: 'Please select a payment method',
+                                          );
+                                        } else {
+                                          _handleStripePayment(
+                                            data.orderId!,
+                                            data.amount!,
+                                            _bookingId!,
+                                          );
+                                        }
+                                      },
+                                      title: const Text('Continue'),
+                                    ),
                               ],
                             );
 
