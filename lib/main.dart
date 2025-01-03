@@ -6,7 +6,8 @@ import 'model/model_user.dart';
 import 'view_model/viewmodel_user.dart';
 
 void main() async {
-  Stripe.publishableKey = 'pk_test_51NnANvICFXSh1wtRd0oyTnWdPyPnv5RFYePJktzqAVwff8LpMAUr1XOfXV8cIM3Uoxi5IsbIUUAJw1YVMYTFpUov006DzGLZ6A'; // Publishable Key từ Stripe
+  Stripe.publishableKey = 'pk_test_51QU14AKcoygqDk7kvVUzwWot2i2f83YVvZGdPiK66L4VSiPpUvCYn8z5br7D2rA6a45olStBwAgxlZtKYcLtIDG600tv3Nsc71';
+
   WidgetsFlutterBinding.ensureInitialized();
 
   User? currentUser = await UserViewModel().getCurrentUser();
