@@ -258,14 +258,10 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               const SizedBox(height: 10),
-
                               // STORY LINE
                               StoryLineText(text: '${widget.movie.storyLine}'),
-
                               const SizedBox(height: 30),
-
                               const Text(
                                 'Director',
                                 style: TextStyle(
@@ -273,14 +269,10 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               const SizedBox(height: 24),
-
                               // LIST DIRECTOR
                               ListActorDirector(actors: widget.movie.director!,),
-
                               const SizedBox(height: 30),
-
                               const Text(
                                 'Actor',
                                 style: TextStyle(
@@ -288,12 +280,9 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               const SizedBox(height: 24),
-
                               // LIST ACTOR
                               ListActorDirector(actors: widget.movie.actor!,),
-
                               const SizedBox(height: 10),
                             ],
                           ),
