@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:movies_app_ttcn/helper/snack_bar.dart';
-import 'package:movies_app_ttcn/view/bot_nav/bot_nav.dart';
 import 'package:movies_app_ttcn/widgets/app_images.dart';
 import 'package:movies_app_ttcn/widgets/basic_button.dart';
 import '../../helper/format_currency.dart';
 import '../../model/model_payments.dart';
 import '../../view_model/viewmodel_payments.dart';
 import '../../view_model/viewmodel_stripe.dart';
+import '../tab_ticket/view_ticket_detail_by_stripe.dart';
 
 class PaymentPage extends StatefulWidget {
   final String? seatIds;
@@ -99,7 +99,7 @@ class _PaymentPageState extends State<PaymentPage> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => BotNav(),
+              builder: (context) => TicketDetailByTripePage(bookingId: bookingId),
           )
       );
 
