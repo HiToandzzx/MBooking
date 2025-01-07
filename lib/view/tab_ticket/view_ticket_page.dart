@@ -36,6 +36,7 @@ class TicketHistoryPageState extends State<TicketHistoryPage> {
       appBar: AppBar(
         title: const Text('My Tickets', style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

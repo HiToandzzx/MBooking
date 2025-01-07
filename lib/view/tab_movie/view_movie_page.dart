@@ -65,6 +65,7 @@ class _MoviePageState extends State<MoviePage>
             Tab(text: 'Coming Soon'),
           ],
         ),
+        automaticallyImplyLeading: false,
       ),
       body: TabBarView(
         controller: _tabController,

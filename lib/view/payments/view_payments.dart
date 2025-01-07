@@ -76,7 +76,6 @@ class _PaymentPageState extends State<PaymentPage> {
       final clientSecret = await _stripeViewModel.clientSecretStream.first;
 
       if (clientSecret == null) {
-        print('Failed to get client secret.');
         return;
       }
 
