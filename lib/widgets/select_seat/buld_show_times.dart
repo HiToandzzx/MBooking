@@ -163,9 +163,7 @@ class BuildShowTimesState extends State<BuildShowTimes> {
               },
             ),
           ),
-
           const SizedBox(height: 20),
-
           // Time Picker
           SizedBox(
             height: 50,

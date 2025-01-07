@@ -24,8 +24,19 @@ class _MoviePageState extends State<MoviePage>
     super.initState();
     _tabController = TabController(
         length: 2, vsync: this, initialIndex: widget.initialTabIndex);
-    futureNowPlayingMovies = MovieViewModel.fetchMovies(0);
-    futureComingSoonMovies = MovieViewModel.fetchMovies(1);
+    _loadMovies();
+  }
+
+  void _loadMovies() {
+    setState(() {
+      futureNowPlayingMovies = MovieViewModel.fetchMovies(0);
+      futureComingSoonMovies = MovieViewModel.fetchMovies(1);
+    });
+  }
+
+  Future<void> _refreshMovies() async {
+    _loadMovies();
+    await Future.delayed(const Duration(milliseconds: 500));
   }
 
   @override
@@ -58,11 +69,18 @@ class _MoviePageState extends State<MoviePage>
       body: TabBarView(
         controller: _tabController,
         children: [
-          buildMovieGridNowPlaying(futureNowPlayingMovies),
-          buildMovieGridComingSoon(futureComingSoonMovies),
+          RefreshIndicator(
+            onRefresh: _refreshMovies,
+            color: Colors.amber,
+            child: buildMovieGridNowPlaying(futureNowPlayingMovies),
+          ),
+          RefreshIndicator(
+            onRefresh: _refreshMovies,
+            color: Colors.amber,
+            child: buildMovieGridComingSoon(futureComingSoonMovies),
+          ),
         ],
       ),
     );
   }
 }
-
