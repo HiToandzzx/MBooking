@@ -65,7 +65,15 @@ class BuildShowTimesState extends State<BuildShowTimes> {
 
   @override
   Widget build(BuildContext context) {
-    final uniqueDates = widget.showTimes.map((e) => e.date).toSet().toList();
+    final now = DateTime.now();
+
+    final uniqueDates = widget.showTimes
+        .map((e) => e.date)
+        .toSet()
+        .where((date) {
+          final parsedDate = DateTime.tryParse('${date!.substring(6)}-${date.substring(3, 5)}-${date.substring(0, 2)}');
+          return parsedDate != null && parsedDate.isAfter(now.subtract(const Duration(days: 1)));
+        }).toList();
 
     if (uniqueDates.isEmpty) {
       return const Center(
@@ -78,8 +86,23 @@ class BuildShowTimesState extends State<BuildShowTimes> {
 
     final filteredTimes = widget.showTimes
         .where((e) => e.date == uniqueDates[selectedDateIndex])
-        .map((e) => e.time)
-        .toList();
+        .map((e) {
+          final fullDateTime = DateTime.tryParse('${e.date!.substring(6)}-${e.date?.substring(3, 5)}-${e.date?.substring(0, 2)} ${e.time}');
+          if (fullDateTime == null) return null;
+          if (fullDateTime.day == now.day && fullDateTime.month == now.month && fullDateTime.year == now.year) {
+            return fullDateTime.isAfter(now) ? e.time : null;
+          }
+          return e.time;
+        }).where((time) => time != null).toList();
+
+    if (filteredTimes.isEmpty) {
+      return const Center(
+        child: Text(
+          'No available times for the selected date.',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -144,61 +167,55 @@ class BuildShowTimesState extends State<BuildShowTimes> {
           const SizedBox(height: 20),
 
           // Time Picker
-          filteredTimes.isNotEmpty
-              ? SizedBox(
-                  height: 50,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: filteredTimes.length,
-                    itemBuilder: (context, index) {
-                      final isSelected = selectedTimeIndex == index;
-                      final time = filteredTimes[index];
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedTimeIndex = index;
-                            widget.onShowtimeSelected?.call(
-                              uniqueDates[selectedDateIndex]!,
-                              time!,
-                            );
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: isSelected
-                              ? BoxDecoration(
-                            color: const Color(0xFF111111),
-                            borderRadius: BorderRadius.circular(40),
-                            border: Border.all(color: Colors.amber, width: 2),
-                          )
-                              : BoxDecoration(
-                            color: Colors.grey[800],
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          child: Center(
-                            child: Text(
-                              time.toString().substring(0, 5),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
+          SizedBox(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: filteredTimes.length,
+              itemBuilder: (context, index) {
+                final isSelected = selectedTimeIndex == index;
+                final time = filteredTimes[index];
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedTimeIndex = index;
+                      widget.onShowtimeSelected?.call(
+                        uniqueDates[selectedDateIndex]!,
+                        time!,
                       );
-                    },
-                  ),
-                )
-              : const Center(
-                        child: Text(
-                          'No available times for the selected date.',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                    });
+                  },
+                  child: Container(
+                    width: 80,
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: isSelected
+                        ? BoxDecoration(
+                      color: const Color(0xFF111111),
+                      borderRadius: BorderRadius.circular(40),
+                      border: Border.all(color: Colors.amber, width: 2),
+                    )
+                        : BoxDecoration(
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Center(
+                      child: Text(
+                        time.toString().substring(0, 5),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
   }
+
 }

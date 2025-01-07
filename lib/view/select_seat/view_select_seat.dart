@@ -7,7 +7,6 @@ import '../../model/model_show_time.dart';
 import '../../view_model/viewmodel_seats.dart';
 import '../../view_model/viewmodel_show_time.dart';
 import '../../widgets/app_images.dart';
-import '../../widgets/count_down.dart';
 import '../../widgets/select_seat/buld_show_times.dart';
 import 'package:flutter/scheduler.dart';
 import '../../widgets/select_seat/type_seats.dart';

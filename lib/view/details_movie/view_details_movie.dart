@@ -303,20 +303,22 @@ class DetailMoviePageState extends State<DetailMoviePage> {
                   ],
                 ),
               ),
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: MainButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SelectSeatPage(filmId: widget.movie.id!),
-                        )
-                    );
-                  },
-                  title: const Text('Continue'),
-                ),
-              ),
+              bottomNavigationBar: widget.movie.status == 0
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                      child: MainButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SelectSeatPage(filmId: widget.movie.id!),
+                              )
+                          );
+                        },
+                        title: const Text('Continue'),
+                      ),
+                    )
+                  : null,
             );
           }
         });
