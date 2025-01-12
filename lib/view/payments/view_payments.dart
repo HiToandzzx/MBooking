@@ -7,6 +7,7 @@ import '../../helper/format_currency.dart';
 import '../../model/model_payments.dart';
 import '../../view_model/viewmodel_payments.dart';
 import '../../view_model/viewmodel_stripe.dart';
+import '../../widgets/count_down.dart';
 import '../tab_ticket/view_ticket_detail_by_stripe.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -375,7 +376,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
                                 const SizedBox(height: 20,),
 
-
                                 GestureDetector(
                                   onTap: _selectPaymentMethod,
                                   child: Container(
@@ -422,30 +422,39 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ),
                                 ),
 
-                                const SizedBox(height: 40,),
+                                const SizedBox(height: 30,),
 
-                                /*MainButton(
-                                    onPressed: () {
-                                      if (!_isSelected) {
-                                        failedSnackBar(
-                                            context: context,
-                                            message: 'Please select payment method'
-                                        );
-                                      } else {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => StripeForm(
-                                                    orderId: data.orderId!,
-                                                    bookingId: _bookingId!,
-                                                    amount: data.amount!
-                                                ),
-                                            )
-                                        );
-                                      }
-                                    },
-                                    title: const Text('Continue')
-                                )*/
+                                // COUNT DOWN CANCEL PAYMENT
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                          'Complete your payment in',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      CountdownTimer(
+                                        duration: const Duration(minutes: 10),
+                                        onTimerComplete: (){
+                                          Navigator.pop(context);
+                                        },
+
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(height: 30,),
+
+                                // BUTTON PAYMENT
                                 _isLoadingPayment
                                     ? const CircularProgressIndicator(color: Colors.amber)
                                     : MainButton(
